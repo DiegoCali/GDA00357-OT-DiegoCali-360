@@ -62,6 +62,7 @@ CREATE TABLE ProductCategories
     StateID INT NOT NULL FOREIGN KEY REFERENCES States(StateID),
     creation_date DATETIME NULL
 )
+GO
 -- Create the table for Products
 CREATE TABLE Products
 (
@@ -77,6 +78,7 @@ CREATE TABLE Products
     creation_date DATETIME NULL,
     picture BINARY NULL
 )
+GO
 -- Create the table for Orders
 CREATE TABLE Orders
 (
@@ -91,6 +93,7 @@ CREATE TABLE Orders
     delivery_date DATE NULL,
     total_price FLOAT NULL
 )
+GO
 -- Create the table for Order Details
 CREATE TABLE OrderDetails
 (
@@ -101,54 +104,93 @@ CREATE TABLE OrderDetails
     price FLOAT NULL,
     subtotal FLOAT NULL
 )
+GO
 -- Adding Data to the Tables
 -- Add Data to the Roles Table
 INSERT INTO Roles (role_name) VALUES ('Operator')
 INSERT INTO Roles (role_name) VALUES ('Customer')
+GO
 -- Add Data to the States Table
 INSERT INTO States (state_name) VALUES ('Confirmed')
 INSERT INTO States (state_name) VALUES ('Pending')
 INSERT INTO States (state_name) VALUES ('Cancelled')
 INSERT INTO States (state_name) VALUES ('Delivered')
--- Add Data to the Customers Table
-INSERT INTO Customers (company_name, comercial_name, delivery_address, phone, email) VALUES (
-    'Company1', 'Comercial1', 'Address1', '123456789', 'mymail@mail.com'
-)
-INSERT INTO Customers (company_name, comercial_name, delivery_address, phone, email) VALUES (
-    'Company2', 'Comercial2', 'Address2', '987654321', 'nomail@mail.com'
-)
--- Add Data to the Users Table
-INSERT INTO Users (RoleID, StateID, email, user_name, user_password, phone, birth_date, creation_date, CustomerID) VALUES (
-    1, 1, 'diego@mail.com', 'Diego', '123456', '123456789', '1990-01-01', GETDATE(), NULL
-)
-INSERT INTO Users (RoleID, StateID, email, user_name, user_password, phone, birth_date, creation_date, CustomerID) VALUES (
-    2, 1, 'pablo@mail.com', 'Pablo', '123456', '987654321', '1990-01-01', GETDATE(), 1
-)
--- Add Data to the ProductCategories Table
-INSERT INTO ProductCategories (UserID, category_name, StateID, creation_date) VALUES (
-    1, 'Category1', 1, GETDATE()
-)
-INSERT INTO ProductCategories (UserID, category_name, StateID, creation_date) VALUES (
-    1, 'Category2', 1, GETDATE()
-)
--- Add Data to the Products Table
-INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture) VALUES (
-    1, 1, 'Product1', 'Brand1', '123456', 10, 1, 100.00, GETDATE(), NULL
-)
-INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture) VALUES (
-    2, 1, 'Product2', 'Brand2', '654321', 5, 1, 200.00, GETDATE(), NULL
-)
--- Add Data to the Orders Table
-INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price) VALUES (
-    2, 1, GETDATE(), 'Order1', 'Address1', '123456789', 'lorem@mail.com', '2020-01-01', 300.00
-)
-INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price) VALUES (
-    2, 1, GETDATE(), 'Order2', 'Address2', '987654321', 'ipsum@mail.com', '2020-01-02', 400.00
-)
--- Add Data to the OrderDetails Table
-INSERT INTO OrderDetails (OrderID, ProductID, quantity, price, subtotal) VALUES (
-    1, 1, 2, 100.00, 200.00
-)
-INSERT INTO OrderDetails (OrderID, ProductID, quantity, price, subtotal) VALUES (
-    1, 2, 1, 200.00, 200.00
-)
+INSERT INTO States (state_name) VALUES ('Inactivated')
+GO
+-- Create Procedures
+-- Procedure to Insert a new User
+-- Args: @RoleID, @StateID, @email, @user_name, @user_password, @phone, @birth_date, @creation_date, @CustomerID
+CREATE PROCEDURE InsertUser
+    @RoleID INT,
+    @StateID INT,
+    @email VARCHAR(45),
+    @user_name VARCHAR(45),
+    @user_password VARCHAR(45),
+    @phone VARCHAR(45),
+    @birth_date DATE,
+    @creation_date DATETIME,
+    @CustomerID INT
+AS
+    INSERT INTO Users (RoleID, StateID, email, user_name, user_password, phone, birth_date, creation_date, CustomerID)
+    VALUES (@RoleID, @StateID, @email, @user_name, @user_password, @phone, @birth_date, @creation_date, @CustomerID)
+GO
+-- Procedure to Insert a new Product Category
+CREATE PROCEDURE InsertProductCategory
+    @UserID INT,
+    @category_name VARCHAR(45),
+    @StateID INT,
+    @creation_date DATETIME
+AS
+    INSERT INTO ProductCategories (UserID, category_name, StateID, creation_date)
+    VALUES (@UserID, @category_name, @StateID, @creation_date)
+GO
+-- Procedure to Insert a new Product
+CREATE PROCEDURE InsertProduct
+    @CategoryID INT,
+    @UserID INT,
+    @product_name VARCHAR(45),
+    @brand VARCHAR(45),
+    @code VARCHAR(45),
+    @stock INT,
+    @StateID INT,
+    @price FLOAT,
+    @creation_date DATETIME,
+    @picture BINARY
+AS
+    INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture)
+    VALUES (@CategoryID, @UserID, @product_name, @brand, @code, @stock, @StateID, @price, @creation_date, @picture)
+GO
+-- Procedure to Insert a new Order
+CREATE PROCEDURE InsertOrder
+    @UserID INT,
+    @StateID INT,
+    @creation_date DATETIME,
+    @order_name VARCHAR(45),
+    @delivery_address VARCHAR(45),
+    @phone VARCHAR(45),
+    @email VARCHAR(45),
+    @delivery_date DATE,
+    @total_price FLOAT
+AS
+    INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
+    VALUES (@UserID, @StateID, @creation_date, @order_name, @delivery_address, @phone, @email, @delivery_date, @total_price)
+GO
+-- Procedure to Insert a new Order Detail
+CREATE PROCEDURE InsertOrderDetail
+    @OrderID INT,
+    @ProductID INT,
+    @quantity INT,
+    @price FLOAT,
+    @subtotal FLOAT
+AS
+    INSERT INTO OrderDetails (OrderID, ProductID, quantity, price, subtotal)
+    VALUES (@OrderID, @ProductID, @quantity, @price, @subtotal)
+GO
+-- Procedure to Inactivate a Product
+CREATE PROCEDURE InactivateProduct
+    @ProductID INT
+AS
+    UPDATE Products
+    SET StateID = 5
+    WHERE ProductID = @ProductID
+GO
