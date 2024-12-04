@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This is an API made with Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoCali/GDA00357-OT-DiegoCali-360.git"
+  },
+  "keywords": [
+    "Express",
+    "Typescript",
+    "NodeJs"
+  ],
+  "author": "Diego Cali",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DiegoCali/GDA00357-OT-DiegoCali-360/issues"
+  },
+  "homepage": "https://github.com/DiegoCali/GDA00357-OT-DiegoCali-360#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
