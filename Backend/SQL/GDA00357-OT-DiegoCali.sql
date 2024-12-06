@@ -37,7 +37,7 @@ CREATE TABLE Customers
     phone VARCHAR(45) NULL,
     email VARCHAR(45) NULL
 )
-GO
+GO 
 -- Create the table for Users
 CREATE TABLE Users
 (

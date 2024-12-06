@@ -1,13 +1,14 @@
 require('dotenv').config();
 import express from 'express';
-import { Product } from './models/ProductModel';
+import { Order } from './models/OrderModel';
 
 const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-    Product.findAll().then((products) => {
-        res.send(products);
+  console.log('GET /');
+    Order.findAll().then((orders) => {            
+        res.send(orders);
     });
 });
 
