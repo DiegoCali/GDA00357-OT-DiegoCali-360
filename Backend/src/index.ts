@@ -7,8 +7,8 @@ const port = 3000;
 
 app.get('/', (req, res) => {
   console.log('\x1b[36m%s\x1b[0m', 'GET /');
-    Role.findAll().then((categories) => {            
-        res.send(categories);
+    Role.findAll().then((roles) => {            
+        res.send(roles);
     });
 });
 
