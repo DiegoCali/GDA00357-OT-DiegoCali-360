@@ -1,5 +1,6 @@
 import { sql } from "./Squelize";
 import { DataTypes } from "@sequelize/core";
+import { OrderDetail } from "./OrderDetailModel";
 
 export const Product = sql.define(
     "Product",
@@ -54,3 +55,7 @@ export const Product = sql.define(
         timestamps: false,        
     }
 );
+
+Product.hasMany(OrderDetail, {
+    foreignKey: "ProductId",
+});

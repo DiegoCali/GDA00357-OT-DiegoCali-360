@@ -1,5 +1,6 @@
 import { sql } from "./Squelize";
 import { DataTypes } from "@sequelize/core";
+import { User } from "./UserModel";
 
 export const Customer = sql.define(
     "Customer",
@@ -34,3 +35,7 @@ export const Customer = sql.define(
         timestamps: false,
     }
 );
+
+Customer.hasMany(User, {
+    foreignKey: "CustomerId",
+});
