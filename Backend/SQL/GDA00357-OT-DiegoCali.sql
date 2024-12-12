@@ -134,6 +134,7 @@ CREATE PROCEDURE InsertUser
 AS
     INSERT INTO Users (RoleID, StateID, email, user_name, user_password, phone, birth_date, creation_date, CustomerID)
     VALUES (@RoleID, @StateID, @email, @user_name, @user_password, @phone, @birth_date, GETDATE(), @CustomerID)
+    SELECT SCOPE_IDENTITY() AS UserID
 GO
 -- Procedure to Insert a new Customer
 CREATE PROCEDURE InsertCustomer
@@ -145,6 +146,7 @@ CREATE PROCEDURE InsertCustomer
 AS
     INSERT INTO Customers (company_name, comercial_name, delivery_address, phone, email)
     VALUES (@company_name, @comercial_name, @delivery_address, @phone, @email)
+    SELECT SCOPE_IDENTITY() AS CustomerID
 GO
 -- Procedure to Insert a new Product Category
 CREATE PROCEDURE InsertProductCategory
@@ -155,6 +157,7 @@ CREATE PROCEDURE InsertProductCategory
 AS
     INSERT INTO ProductCategories (UserID, category_name, StateID, creation_date)
     VALUES (@UserID, @category_name, @StateID, GETDATE())
+    SELECT SCOPE_IDENTITY() AS CategoryID
 GO
 -- Procedure to Insert a new Product
 CREATE PROCEDURE InsertProduct
@@ -171,6 +174,7 @@ CREATE PROCEDURE InsertProduct
 AS
     INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture)
     VALUES (@CategoryID, @UserID, @product_name, @brand, @code, @stock, @StateID, @price, GETDATE(), @picture)
+    SELECT SCOPE_IDENTITY() AS ProductID
 GO
 -- Procedure to Insert a new Order
 CREATE PROCEDURE InsertOrder
@@ -186,6 +190,7 @@ CREATE PROCEDURE InsertOrder
 AS
     INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
     VALUES (@UserID, @StateID, GETDATE(), @order_name, @delivery_address, @phone, @email, @delivery_date, @total_price)
+    SELECT SCOPE_IDENTITY() AS OrderID
 GO
 -- Procedure to Insert a new Order Detail
 CREATE PROCEDURE InsertOrderDetail
@@ -197,6 +202,138 @@ CREATE PROCEDURE InsertOrderDetail
 AS
     INSERT INTO OrderDetails (OrderID, ProductID, quantity, price, subtotal)
     VALUES (@OrderID, @ProductID, @quantity, @price, @subtotal)
+    SELECT SCOPE_IDENTITY() AS OrderDetailID
+GO
+-- Procedure to insert a user and a customer
+CREATE PROCEDURE InsertCustomerUser
+    @RoleID INT,
+    @StateID INT,
+    @email VARCHAR(45),
+    @user_name VARCHAR(45),
+    @user_password VARCHAR(45),
+    @phone VARCHAR(45),
+    @birth_date DATE,
+    @company_name VARCHAR(45),
+    @comercial_name VARCHAR(45),
+    @delivery_address VARCHAR(45),
+    @phone_customer VARCHAR(45),
+    @email_customer VARCHAR(45)
+AS
+    DECLARE @CustomerID INT
+    EXEC InsertCustomer @company_name, @comercial_name, @delivery_address, @phone_customer, @email_customer
+    SET @CustomerID = SCOPE_IDENTITY()
+    EXEC InsertUser @RoleID, @StateID, @email, @user_name, @user_password, @phone, @birth_date, @CustomerID
+GO
+-- Procedure to Update a User
+CREATE PROCEDURE UpdateUser
+    @UserID INT,    
+    @email VARCHAR(45),
+    @user_name VARCHAR(45),
+    @user_password VARCHAR(45),
+    @phone VARCHAR(45),
+    @birth_date DATE
+AS
+    UPDATE Users
+    SET email = @email,
+        user_name = @user_name,
+        user_password = @user_password,
+        phone = @phone,
+        birth_date = @birth_date
+    WHERE UserID = @UserID
+GO
+-- Procedure to change the password of a User
+CREATE PROCEDURE ChangePassword
+    @UserID INT,
+    @user_password VARCHAR(45)
+AS
+    UPDATE Users
+    SET user_password = @user_password
+    WHERE UserID = @UserID
+GO
+-- Procedure to Update a Customer
+CREATE PROCEDURE UpdateCustomer
+    @CustomerID INT,
+    @company_name VARCHAR(45),
+    @comercial_name VARCHAR(45),
+    @delivery_address VARCHAR(45),
+    @phone VARCHAR(45),
+    @email VARCHAR(45)
+AS
+    UPDATE Customers
+    SET company_name = @company_name,
+        comercial_name = @comercial_name,
+        delivery_address = @delivery_address,
+        phone = @phone,
+        email = @email
+    WHERE CustomerID = @CustomerID
+GO
+-- Procedure to Update a Product Category
+CREATE PROCEDURE UpdateProductCategory
+    @CategoryID INT,
+    @category_name VARCHAR(45)
+AS
+    UPDATE ProductCategories
+    SET category_name = @category_name
+    WHERE CategoryID = @CategoryID
+GO
+-- Procedure to Update a Product
+CREATE PROCEDURE UpdateProduct
+    @ProductID INT,
+    @product_name VARCHAR(45),
+    @brand VARCHAR(45),
+    @code VARCHAR(45),
+    @stock INT,
+    @price FLOAT,
+    @picture BINARY
+AS
+    UPDATE Products
+    SET product_name = @product_name,
+        brand = @brand,
+        code = @code,
+        stock = @stock,
+        price = @price,
+        picture = @picture
+    WHERE ProductID = @ProductID
+GO
+-- Procedure to Update an Order
+CREATE PROCEDURE UpdateOrder
+    @OrderID INT,
+    @order_name VARCHAR(45),
+    @delivery_address VARCHAR(45),
+    @phone VARCHAR(45),
+    @email VARCHAR(45),
+    @delivery_date DATE,
+    @total_price FLOAT
+AS
+    UPDATE Orders
+    SET order_name = @order_name,
+        delivery_address = @delivery_address,
+        phone = @phone,
+        email = @email,
+        delivery_date = @delivery_date,
+        total_price = @total_price
+    WHERE OrderID = @OrderID
+GO
+-- Procedure to Update an Order Detail
+CREATE PROCEDURE UpdateOrderDetail
+    @OrderDetailID INT,
+    @quantity INT,
+    @price FLOAT,
+    @subtotal FLOAT
+AS
+    UPDATE OrderDetails
+    SET quantity = @quantity,
+        price = @price,
+        subtotal = @subtotal
+    WHERE OrderDetailID = @OrderDetailID
+GO
+-- Procedure to Inactivate a User
+CREATE PROCEDURE InactivateUser
+    @UserID INT
+AS
+    UPDATE Users
+    SET StateID = 6
+    WHERE UserID = @UserID
 GO
 -- Procedure to Inactivate a Product
 CREATE PROCEDURE InactivateProduct

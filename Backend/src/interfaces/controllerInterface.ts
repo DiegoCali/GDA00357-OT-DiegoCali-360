@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 export interface ControllerInterface {
     get: (req: Request, res: Response) => void;
     post: (req: Request, res: Response) => void;
