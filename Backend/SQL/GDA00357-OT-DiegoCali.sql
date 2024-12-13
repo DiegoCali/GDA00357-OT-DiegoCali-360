@@ -154,12 +154,11 @@ GO
 -- Procedure to Insert a new Product Category
 CREATE PROCEDURE InsertProductCategory
     @UserID INT,
-    @category_name VARCHAR(45),
-    @StateID INT
+    @category_name VARCHAR(45)    
     -- creation_date would be created automatically
 AS
     INSERT INTO ProductCategories (UserID, category_name, StateID, creation_date)
-    VALUES (@UserID, @category_name, @StateID, GETDATE())
+    VALUES (@UserID, @category_name, 5, GETDATE())
     SELECT SCOPE_IDENTITY() AS CategoryID
 GO
 -- Procedure to Insert a new Product
