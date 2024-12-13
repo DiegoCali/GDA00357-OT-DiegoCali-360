@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
 export interface ControllerInterface {
-    get: (req: Request, res: Response) => void;
-    post: (req: Request, res: Response) => void;
-    put: (req: Request, res: Response) => void;
+    insert: (req: Request, res: Response) => void;
+    update: (req: Request, res: Response) => void;
     delete: (req: Request, res: Response) => void;
+    select: (req: Request, res: Response) => void;
 }

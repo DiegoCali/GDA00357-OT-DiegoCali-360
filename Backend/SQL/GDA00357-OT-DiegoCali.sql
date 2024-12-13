@@ -137,16 +137,19 @@ AS
     SELECT SCOPE_IDENTITY() AS UserID
 GO
 -- Procedure to Insert a new Customer
-CREATE PROCEDURE InsertCustomer
+CREATE PROCEDURE NewCustomer
     @company_name VARCHAR(45),
     @comercial_name VARCHAR(45),
     @delivery_address VARCHAR(45),
     @phone VARCHAR(45),
-    @email VARCHAR(45)
+    @email VARCHAR(45),
+    @CustomerID INT OUTPUT
 AS
+    SET NOCOUNT ON;
     INSERT INTO Customers (company_name, comercial_name, delivery_address, phone, email)
     VALUES (@company_name, @comercial_name, @delivery_address, @phone, @email)
-    SELECT SCOPE_IDENTITY() AS CustomerID
+    SELECT @CustomerID = SCOPE_IDENTITY()
+    RETURN;
 GO
 -- Procedure to Insert a new Product Category
 CREATE PROCEDURE InsertProductCategory
@@ -205,9 +208,7 @@ AS
     SELECT SCOPE_IDENTITY() AS OrderDetailID
 GO
 -- Procedure to insert a user and a customer
-CREATE PROCEDURE InsertCustomerUser
-    @RoleID INT,
-    @StateID INT,
+CREATE PROCEDURE InsertCustomer
     @email VARCHAR(45),
     @user_name VARCHAR(45),
     @user_password VARCHAR(45),
@@ -219,10 +220,20 @@ CREATE PROCEDURE InsertCustomerUser
     @phone_customer VARCHAR(45),
     @email_customer VARCHAR(45)
 AS
-    DECLARE @CustomerID INT
-    EXEC InsertCustomer @company_name, @comercial_name, @delivery_address, @phone_customer, @email_customer
-    SET @CustomerID = SCOPE_IDENTITY()
-    EXEC InsertUser @RoleID, @StateID, @email, @user_name, @user_password, @phone, @birth_date, @CustomerID
+    DECLARE @NewCustomerID INT
+    EXEC NewCustomer @company_name, @comercial_name, @delivery_address, @phone_customer, @email_customer,
+        @CustomerID = @NewCustomerID OUTPUT;
+    EXEC InsertUser 2, 5, @email, @user_name, @user_password, @phone, @birth_date, @NewCustomerID;
+GO
+-- Procedure to insert an Operator
+CREATE PROCEDURE InsertOperator
+    @email VARCHAR(45),
+    @user_name VARCHAR(45),
+    @user_password VARCHAR(45),
+    @phone VARCHAR(45),
+    @birth_date DATE
+AS
+    EXEC InsertUser 1, 5, @email, @user_name, @user_password, @phone, @birth_date, NULL;
 GO
 -- Procedure to Update a User
 CREATE PROCEDURE UpdateUser
