@@ -7,7 +7,7 @@ export class UserController implements ControllerInterface {
     insert = async (req: Request, res: Response) => {
         try {
             const { kind } = req.params;   
-            console.log('\x1b[32m%s\x1b[0m',`POST /users/${kind}`);     
+            console.log('\x1b[33m%s\x1b[0m',`POST /users/${kind}`);     
             let result;    
             switch (kind) {
                 case "operator":
@@ -26,13 +26,14 @@ export class UserController implements ControllerInterface {
     };
 
     update = async (req: Request, res: Response) => {
+        console.log('\x1b[34m%s\x1b[0m',`PUT /users`);
         throw new Error("Method not implemented.");
     };
 
     delete = async (req: Request, res: Response) => {
         try {
             const { id } = req.params;    
-            console.log('\x1b[32m%s\x1b[0m',`DELETE /users/${id}`);        
+            console.log('\x1b[31m%s\x1b[0m',`DELETE /users/${id}`);        
             await sql.query(
                 `EXEC InactivateUser :id;`,
                 {
@@ -51,10 +52,9 @@ export class UserController implements ControllerInterface {
     select = async (req: Request, res: Response) => {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /users`);
-            const users = await sql.query("SELECT * FROM users");
+            const users = await sql.query("SELECT * FROM Users");
             res.status(200).send(users);
-        } catch (error) {
-            console.log('\x1b[31m%s\x1b[0m',`Error: fetching users`);
+        } catch (error) {            
             res.status(500).send({ error: "Error fetching users" });
         }
     }; 
@@ -63,10 +63,9 @@ export class UserController implements ControllerInterface {
         try {
             const { id } = req.params;
             console.log('\x1b[32m%s\x1b[0m',`GET /users/${id}`);
-            const users = await sql.query(`SELECT * FROM users WHERE id = ${id}`);
+            const users = await sql.query(`SELECT * FROM Users WHERE id = ${id}`);
             res.status(200).send(users);
-        } catch (error) {
-            console.log('\x1b[31m%s\x1b[0m',`Error: fetching user`);
+        } catch (error) {            
             res.status(500).send({ error: "Error fetching user" });
         }
     }

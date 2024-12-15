@@ -5,7 +5,7 @@ import { QueryTypes } from "@sequelize/core";
 
 export class CategoryController implements ControllerInterface {
     insert = async (req: Request, res: Response) => {
-        console.log('\x1b[32m%s\x1b[0m',`POST /categories`);
+        console.log('\x1b[33m%s\x1b[0m',`POST /categories`);
         try {
             const { user_id, category_name } = req.body;
             const result = await sql.query(
@@ -25,11 +25,11 @@ export class CategoryController implements ControllerInterface {
     }
 
     update = async (req: Request, res: Response) => {
-        throw new Error("Method not implemented.");
+        console.log('\x1b[34m%s\x1b[0m',`PUT /categories`);
     }
 
     delete = async (req: Request, res: Response) => {
-        console.log('\x1b[32m%s\x1b[0m',`DELETE /categories`);
+        console.log('\x1b[31m%s\x1b[0m',`DELETE /categories`);
         try {
             const { id } = req.params;
             await sql.query(
@@ -61,7 +61,7 @@ export class CategoryController implements ControllerInterface {
         try {
             const { id } = req.params;
             console.log('\x1b[32m%s\x1b[0m',`GET /categories/${id}`);
-            const categories = await sql.query(`SELECT * FROM categories WHERE id = ${id}`);
+            const categories = await sql.query(`SELECT * FROM ProductCategories WHERE id = ${id}`);
             res.status(200).send(categories);
         } catch (error) {
             res.status(500).send({ error: "Error selecting category" });
