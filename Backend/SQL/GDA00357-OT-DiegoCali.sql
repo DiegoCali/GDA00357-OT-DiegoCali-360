@@ -167,31 +167,25 @@ CREATE PROCEDURE InsertProduct
     @UserID INT,
     @product_name VARCHAR(45),
     @brand VARCHAR(45),
-    @code VARCHAR(45),
-    @stock INT,
-    @StateID INT,
-    @price FLOAT,
-    -- creation_date would be created automatically
-    @picture BINARY
+    @code VARCHAR(45),        
+    @price FLOAT
+    -- creation_date would be created automatically    
 AS
     INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture)
-    VALUES (@CategoryID, @UserID, @product_name, @brand, @code, @stock, @StateID, @price, GETDATE(), @picture)
+    VALUES (@CategoryID, @UserID, @product_name, @brand, @code, 0, 5, @price, GETDATE(), NULL)
     SELECT SCOPE_IDENTITY() AS ProductID
 GO
 -- Procedure to Insert a new Order
 CREATE PROCEDURE InsertOrder
-    @UserID INT,
-    @StateID INT,
+    @UserID INT,    
     -- creation_date would be created automatically
     @order_name VARCHAR(45),
     @delivery_address VARCHAR(45),
     @phone VARCHAR(45),
-    @email VARCHAR(45),
-    @delivery_date DATE,
-    @total_price FLOAT
+    @email VARCHAR(45)
 AS
     INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
-    VALUES (@UserID, @StateID, GETDATE(), @order_name, @delivery_address, @phone, @email, @delivery_date, @total_price)
+    VALUES (@UserID, 5, GETDATE(), @order_name, @delivery_address, @phone, @email, NULL, 0)
     SELECT SCOPE_IDENTITY() AS OrderID
 GO
 -- Procedure to Insert a new Order Detail
@@ -383,6 +377,15 @@ CREATE PROCEDURE DeliverOrder
 AS
     UPDATE Orders
     SET StateID = 4
+    WHERE OrderID = @OrderID
+GO
+-- Procedure to Set the total price of an Order
+CREATE PROCEDURE SetOrder 
+    @OrderID INT,
+    @total FLOAT
+AS 
+    UPDATE Orders
+    SET total_price = @total
     WHERE OrderID = @OrderID
 GO
 -- Views

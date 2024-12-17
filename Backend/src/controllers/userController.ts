@@ -75,7 +75,7 @@ export class UserController implements ControllerInterface {
         try {                 
             const { email, name, password, phone, birth_date } = req.body;
             const clean_date = new Date(birth_date).toISOString().split('T')[0];
-            const result = await sql.query(
+            const result : any = await sql.query(
                 `EXEC InsertOperator :email, :name, :password, :phone, :birthdate;`,
                 {
                   replacements: {
@@ -88,7 +88,9 @@ export class UserController implements ControllerInterface {
                   type: QueryTypes.RAW,
                 }
             );    
-            return result;       
+            // Handle the result to get the user id
+            const user_id = result[0][0]?.UserID;
+            return user_id;
         } catch (error) {
             throw error;
         }
@@ -98,7 +100,7 @@ export class UserController implements ControllerInterface {
         try {            
             const { email, name, password, phone, birth_date, cy_name, cm_name, address, c_phone, c_email} = req.body;
             const clean_date = new Date(birth_date).toISOString().split('T')[0];
-            const result =await sql.query(
+            const result : any = await sql.query(
                 `EXEC InsertCustomer :email, :name, :password, :phone, :birthdate, :cy_name, :cm_name, :address, :c_phone, :c_email;`,
                 {
                   replacements: {
@@ -116,7 +118,9 @@ export class UserController implements ControllerInterface {
                   type: QueryTypes.RAW,
                 }
             );
-            return result;
+            // Handle the result to get the user id
+            const user_id = result[0][0]?.UserID;
+            return user_id;
         } catch (error) {
             throw error;
         }

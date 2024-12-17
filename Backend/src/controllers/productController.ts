@@ -72,6 +72,6 @@ export class ProductController implements ControllerInterface {
         }
     }
 
-    // Private and individual methods}
+    // Private and individual methods
 
 }
