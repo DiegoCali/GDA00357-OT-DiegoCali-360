@@ -46,7 +46,7 @@ CREATE TABLE Users
     StateID INT NOT NULL FOREIGN KEY REFERENCES States(StateID),
     email VARCHAR(45) NULL,
     user_name VARCHAR(45) NULL,
-    user_password VARCHAR(45) NULL,
+    user_password VARCHAR(60) NULL,
     phone VARCHAR(45) NULL,
     birth_date DATE NULL,
     creation_date DATETIME NULL,    
@@ -126,7 +126,7 @@ CREATE PROCEDURE InsertUser
     @StateID INT,
     @email VARCHAR(45),
     @user_name VARCHAR(45),
-    @user_password VARCHAR(45),
+    @user_password VARCHAR(60),
     @phone VARCHAR(45),
     @birth_date DATE,
     -- creation_date would be created automatically
@@ -204,7 +204,7 @@ GO
 CREATE PROCEDURE InsertCustomer
     @email VARCHAR(45),
     @user_name VARCHAR(45),
-    @user_password VARCHAR(45),
+    @user_password VARCHAR(60),
     @phone VARCHAR(45),
     @birth_date DATE,
     @company_name VARCHAR(45),
@@ -222,7 +222,7 @@ GO
 CREATE PROCEDURE InsertOperator
     @email VARCHAR(45),
     @user_name VARCHAR(45),
-    @user_password VARCHAR(45),
+    @user_password VARCHAR(60),
     @phone VARCHAR(45),
     @birth_date DATE
 AS
@@ -233,7 +233,7 @@ CREATE PROCEDURE UpdateUser
     @UserID INT,    
     @email VARCHAR(45),
     @user_name VARCHAR(45),
-    @user_password VARCHAR(45),
+    @user_password VARCHAR(60),
     @phone VARCHAR(45),
     @birth_date DATE
 AS
@@ -248,7 +248,7 @@ GO
 -- Procedure to change the password of a User
 CREATE PROCEDURE ChangePassword
     @UserID INT,
-    @user_password VARCHAR(45)
+    @user_password VARCHAR(60)
 AS
     UPDATE Users
     SET user_password = @user_password
@@ -344,7 +344,7 @@ CREATE PROCEDURE InactivateProduct
     @ProductID INT
 AS
     UPDATE Products
-    SET StateID = 5
+    SET StateID = 6
     WHERE ProductID = @ProductID
 GO
 -- Procedure to Activate a Product
@@ -387,6 +387,14 @@ AS
     UPDATE Orders
     SET total_price = @total
     WHERE OrderID = @OrderID
+GO
+-- Procedure to Login with email
+CREATE PROCEDURE LoginEmail
+    @email nvarchar(45)
+AS
+BEGIN
+    SELECT * FROM Users WHERE email = @email
+END
 GO
 -- Views
 -- View to get all active products that are above 0 in stock

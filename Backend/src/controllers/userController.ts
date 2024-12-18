@@ -22,7 +22,8 @@ export class UserController implements ControllerInterface {
             }
             res.status(200).send({ message: `User created succesfully`, user: result });
         } catch (error) {
-            res.status(500).send({ error: "Error inserting user" });
+            console.log(error);
+            res.status(500).send({ message: "Error Inserting User", error: error });
         }
     };
 
@@ -74,15 +75,15 @@ export class UserController implements ControllerInterface {
     // Private and individual methods
     private insertOperator = async (req: Request, res: Response) => {
         try {                 
-            const { email, name, password, phone, birth_date } = req.body;
+            const { email, user_name, user_password, phone, birth_date } = req.body;
             const clean_date = new Date(birth_date).toISOString().split('T')[0];
-            const hashedPassword = hashPassword(password);
+            const hashedPassword = hashPassword(user_password);
             const result : any = await sql.query(
                 `EXEC InsertOperator :email, :name, :password, :phone, :birthdate;`,
                 {
                   replacements: {
                     email,            
-                    name,        
+                    name: user_name,        
                     password: hashedPassword,    
                     phone,            
                     birthdate: clean_date, 
