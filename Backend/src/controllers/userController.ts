@@ -2,6 +2,7 @@ import { ControllerInterface } from "../interfaces/controllerInterface";
 import { Request, Response } from "express";
 import { sql } from "../database/Connection";
 import { QueryTypes } from "@sequelize/core";
+import { hashPassword } from "../utils/handleBcrypt";
 
 export class UserController implements ControllerInterface {
     insert = async (req: Request, res: Response) => {
@@ -75,13 +76,14 @@ export class UserController implements ControllerInterface {
         try {                 
             const { email, name, password, phone, birth_date } = req.body;
             const clean_date = new Date(birth_date).toISOString().split('T')[0];
+            const hashedPassword = hashPassword(password);
             const result : any = await sql.query(
                 `EXEC InsertOperator :email, :name, :password, :phone, :birthdate;`,
                 {
                   replacements: {
                     email,            
                     name,        
-                    password,    
+                    password: hashedPassword,    
                     phone,            
                     birthdate: clean_date, 
                   },
@@ -100,13 +102,14 @@ export class UserController implements ControllerInterface {
         try {            
             const { email, name, password, phone, birth_date, cy_name, cm_name, address, c_phone, c_email} = req.body;
             const clean_date = new Date(birth_date).toISOString().split('T')[0];
+            const hashedPassword = hashPassword(password);
             const result : any = await sql.query(
                 `EXEC InsertCustomer :email, :name, :password, :phone, :birthdate, :cy_name, :cm_name, :address, :c_phone, :c_email;`,
                 {
                   replacements: {
                     email,            
                     name,        
-                    password,    
+                    password: hashedPassword,    
                     phone,            
                     birthdate: clean_date, 
                     cy_name,
