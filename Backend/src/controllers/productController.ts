@@ -73,5 +73,23 @@ export class ProductController implements ControllerInterface {
     }
 
     // Private and individual methods
-
+    updateStock = async (req: Request, res: Response) => {
+        try {
+            const { id, quantity } = req.body;
+            console.log('\x1b[34m%s\x1b[0m',`PUT /products/stock`);
+            await sql.query(
+                `EXEC UpdateStock :id, :quantity;`,
+                {
+                    replacements: {
+                        id,
+                        quantity
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "Stock updated successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error updating stock" });
+        }
+    }
 }

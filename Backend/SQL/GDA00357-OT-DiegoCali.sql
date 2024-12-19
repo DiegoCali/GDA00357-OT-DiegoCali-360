@@ -396,6 +396,25 @@ BEGIN
     SELECT * FROM Users WHERE email = @email
 END
 GO
+-- Procedure to Search User Role
+CREATE PROCEDURE SearchUserRole
+    @RoleID INT
+AS
+BEGIN
+    SELECT * FROM Roles WHERE RoleID = @RoleID
+END
+GO
+-- Procedure to Update Stock
+CREATE PROCEDURE UpdateStock
+    @ProductID INT,
+    @Quantity INT
+AS
+BEGIN
+    UPDATE Products
+    SET Stock = Stock + @Quantity
+    WHERE ProductID = @ProductID
+END
+GO
 -- Views
 -- View to get all active products that are above 0 in stock
 CREATE VIEW [ActiveProducts]

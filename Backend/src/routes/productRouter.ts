@@ -9,6 +9,7 @@ productRouter.get("/products", checkAuth(['operator', 'customer']), productContr
 productRouter.get("/products/:id", checkAuth(['operator', 'customer']), productController.selectById);
 productRouter.post("/products", checkAuth(['operator']), productController.insert);
 productRouter.put("/products/:id", checkAuth(['operator']), productController.update);
+productRouter.put("/products/stock", checkAuth(['operator']), productController.updateStock);
 productRouter.delete("/products/:id", checkAuth(['operator']), productController.delete);
 
 export { productRouter };
