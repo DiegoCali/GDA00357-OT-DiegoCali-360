@@ -29,7 +29,28 @@ export class ProductController implements ControllerInterface {
     }
 
     update = async (req: Request, res: Response) => {
-        console.log('\x1b[34m%s\x1b[0m',`PUT /products`);
+        try {
+            console.log('\x1b[34m%s\x1b[0m',`PUT /products`);
+            const { id } = req.params;
+            const { name, brand, code, price, picture } = req.body;
+            await sql.query(
+                `EXEC UpdateProduct :id, :name, :brand, :code, :price, :picture;`,
+                {
+                    replacements: {
+                        id,
+                        name,
+                        brand,
+                        code,
+                        price,
+                        picture
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "Product updated successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error updating product" });
+        }
     }
 
     delete = async (req: Request, res: Response) => {

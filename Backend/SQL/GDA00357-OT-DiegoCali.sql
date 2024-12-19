@@ -457,3 +457,6 @@ AS
     GROUP BY p.ProductID, p.product_name, p.brand
     ORDER BY total_sold DESC
 GO
+-- Create admin user
+EXEC InsertOperator 'operator@mail.com', 'Admin', '123456', '4444-4444', '1990-01-01';
+GO

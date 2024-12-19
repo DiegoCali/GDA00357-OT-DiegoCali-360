@@ -31,7 +31,27 @@ export class OrderController implements ControllerInterface {
     }
 
     update = async (req: Request, res: Response) => {
-        console.log('\x1b[34m%s\x1b[0m',`PUT /orders`);
+        try {
+            console.log('\x1b[34m%s\x1b[0m',`PUT /orders`);
+            const { id } = req.params;
+            const { order_name, delivery, phone, email } = req.body;
+            await sql.query(
+                `EXEC UpdateOrder :id, :order_name, :delivery, :phone, :email;`,
+                {
+                    replacements: {
+                        id,
+                        order_name,
+                        delivery,
+                        phone,
+                        email
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "Order updated successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error updating order" });
+        }
     }
 
     delete = async (req: Request, res: Response) => {

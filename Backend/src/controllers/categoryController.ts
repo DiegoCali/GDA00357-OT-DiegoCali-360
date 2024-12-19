@@ -25,7 +25,24 @@ export class CategoryController implements ControllerInterface {
     }
 
     update = async (req: Request, res: Response) => {
-        console.log('\x1b[34m%s\x1b[0m',`PUT /categories`);
+        try {
+            console.log('\x1b[34m%s\x1b[0m',`PUT /categories`);
+            const { id } = req.params;
+            const { category_name } = req.body;
+            await sql.query(
+                `EXEC UpdateProductCategory :id, :category_name;`,
+                {
+                    replacements: {
+                        id,
+                        category_name
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "Category updated successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error updating category" });
+        }
     }
 
     delete = async (req: Request, res: Response) => {

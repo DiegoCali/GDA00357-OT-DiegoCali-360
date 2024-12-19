@@ -28,8 +28,30 @@ export class UserController implements ControllerInterface {
     };
 
     update = async (req: Request, res: Response) => {
-        console.log('\x1b[34m%s\x1b[0m',`PUT /users`);
-        throw new Error("Method not implemented.");
+        try {
+            console.log('\x1b[34m%s\x1b[0m',`PUT /users`);
+            const { id } = req.params;
+            const { email, user_name, user_password, phone, birth_date} = req.body;
+            const clean_date = new Date(birth_date).toISOString().split('T')[0];
+            const hashedPassword = hashPassword(user_password);
+            await sql.query(
+                `EXEC UpdateUser :id, :email, :name, :password, :phone, :birthdate;`,
+                {
+                  replacements: {
+                    id,
+                    email,            
+                    name: user_name,        
+                    password: hashedPassword,    
+                    phone,            
+                    birthdate: clean_date, 
+                  },
+                  type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "User updated successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error updating user" });
+        }
     };
 
     delete = async (req: Request, res: Response) => {
@@ -102,7 +124,7 @@ export class UserController implements ControllerInterface {
     private insertCustomer = async (req: Request, res: Response) => {
         try {            
             const { email, name, password, phone, birth_date, cy_name, cm_name, address, c_phone, c_email} = req.body;
-            const clean_date = new Date(birth_date).toISOString().split('T')[0];
+            const clean_date = new Date(birth_date).toISOString().split('T')[0];            
             const hashedPassword = hashPassword(password);
             const result : any = await sql.query(
                 `EXEC InsertCustomer :email, :name, :password, :phone, :birthdate, :cy_name, :cm_name, :address, :c_phone, :c_email;`,
