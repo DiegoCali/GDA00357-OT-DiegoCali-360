@@ -5,10 +5,10 @@ import { checkAuth } from "../middleware/checkAuth";
 const userRouter = Router();
 const userController = new UserController();
 
-userRouter.get("/users", checkAuth, userController.select);
-userRouter.get("/users/:id", userController.selectById);
-userRouter.post("/users/:kind", userController.insert);
-userRouter.put("/users/:id", userController.update);
-userRouter.delete("/users/:id", userController.delete);
+userRouter.get("/users", checkAuth(['operator']), userController.select);
+userRouter.get("/users/:id", checkAuth(['operator']), userController.selectById);
+userRouter.post("/users/:kind", checkAuth(['operator']), userController.insert);
+userRouter.put("/users/:id", checkAuth(['operator']), userController.update);
+userRouter.delete("/users/:id", checkAuth(['operator']), userController.delete);
 
 export { userRouter };
