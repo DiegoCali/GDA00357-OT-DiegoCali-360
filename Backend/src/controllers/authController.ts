@@ -2,8 +2,8 @@
 import { Request, Response } from "express";
 import { sql } from "../database/Connection";
 import { QueryTypes } from "@sequelize/core";
-import { UserController } from "./userController";
 import { hashPassword, comparePassword } from "../utils/handleBcrypt";
+import { genToken } from "../utils/webToken";
 
 export class AuthController {
     login = async (req: Request, res: Response) => {
@@ -23,7 +23,8 @@ export class AuthController {
             if (!checkPassword) {
                 throw new Error("Invalid password");
             }
-            res.status(200).send({ message: "User logged in successfully", user: user[0] });
+            const token = genToken(user[0]);
+            res.status(200).send({ message: "User logged in successfully", user: user[0], token: token });
         } catch (error) {
             res.status(500).send({ error: "Error logging in" });
         }

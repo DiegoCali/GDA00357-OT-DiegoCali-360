@@ -2,7 +2,8 @@ import { sign, verify } from "jsonwebtoken";
 
 export const genToken = (user: any): string => {
     const token = sign( {
-        data: user
+            _id: user.UserID,
+            role: user.RoleID
         },
         process.env.JWT_SECRET as string,
         { expiresIn: 60 * 60 * 24 }
