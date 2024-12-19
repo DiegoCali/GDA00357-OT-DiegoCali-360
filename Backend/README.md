@@ -11,8 +11,8 @@ To execute the program run the following comand in your terminal:
 npm run dev
 ```
 ## Try with postman:
-[!Important]
-Backend is running in http://localhost:3000.
+>[!Important]
+>Backend is running in http://localhost:3000.
 
 To try the program you can import this collection in postman:
 [PostMan Collection](D360.postman_collection.json)
@@ -26,5 +26,5 @@ Some endpoints require authentication, to get the token you need to make a POST 
 }
 ```
 This will return a token that you need to use in the headers of the requests that require authentication.
-[!Important]
-All endpoinst need authentication except for the login endpoint. You can create new users with the admin user for customer endpoints.
+>[!Important]
+>All endpoinst need authentication except for the login endpoint. You can create new users with the admin >user for customer endpoints.
