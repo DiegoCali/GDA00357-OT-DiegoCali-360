@@ -12,6 +12,7 @@ const request = async (url: string, method: string, body?: any, customHeaders?: 
         body: body ? JSON.stringify(body) : undefined
     };
 
+    console.log("Request:", url, options.body);
     try {
         const response = await fetch(`${BASE_URL}${url}`, options);
         const data = await response.json();

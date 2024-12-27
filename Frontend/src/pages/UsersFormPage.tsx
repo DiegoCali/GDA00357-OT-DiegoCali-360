@@ -78,7 +78,7 @@ const UsersFormPage: React.FC = () => {
                         <br />
                         <input
                             type="text"
-                            placeholder="Contact Name"
+                            placeholder="Comercial Name"
                             value={cm_name}
                             onChange={(event) => setCmName(event.target.value)}
                         />
