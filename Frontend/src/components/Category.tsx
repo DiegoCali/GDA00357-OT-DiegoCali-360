@@ -1,24 +1,22 @@
 import { useNavigate } from "react-router-dom";
 
-interface UserProps {
+interface CategoryProps {
     id: number;
     name: string;
-    email: string;
 }
 
-const User: React.FC<UserProps> = ({ id, name, email }) => {
+const Category: React.FC<CategoryProps> = ({ id, name }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/users/${id}`);
-    };
+        navigate(`/categories/${id}`);
+    }
 
     return (
         <div onClick={handleClick}>
             <h3>{name}</h3>
-            <p>{email}</p>
         </div>
     );
-};
+}
 
-export default User;
+export default Category;

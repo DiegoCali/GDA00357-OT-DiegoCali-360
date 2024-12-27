@@ -68,7 +68,7 @@ export class CategoryController implements ControllerInterface {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /categories`);
             const categories = await sql.query("SELECT * FROM ProductCategories");
-            res.status(200).send(categories);
+            res.status(200).send(categories[0]);
         } catch (error) {
             res.status(500).send({ error: "Error selecting categories" });
         }

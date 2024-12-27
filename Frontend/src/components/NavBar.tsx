@@ -24,8 +24,8 @@ export default function NavBar() {
                 </li>
                 <li>
                     {
-                        role === 1 && location.pathname !== "/products" && (
-                            <NavLink to="/products">Products</NavLink>
+                        role === 1 && location.pathname !== "/users" && (
+                            <NavLink to="/users">Users</NavLink>
                         )
                     }
                 </li>

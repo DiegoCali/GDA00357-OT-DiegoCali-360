@@ -77,7 +77,7 @@ export class UserController implements ControllerInterface {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /users`);
             const users = await sql.query("SELECT * FROM Users");
-            res.status(200).send(users);
+            res.status(200).send(users[0]);
         } catch (error) {            
             res.status(500).send({ error: "Error fetching users" });
         }
