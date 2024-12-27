@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import cors from 'cors';
 import { userRouter } from './routes/userRouter';
 import { authRouter } from './routes/authRouter';
 import { categoryRouter } from './routes/categoryRouter';
@@ -10,6 +11,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(userRouter);

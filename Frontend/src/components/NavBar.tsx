@@ -4,7 +4,7 @@ import { useAuth } from "../store/authStore";
 export default function NavBar() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { token, logout } = useAuth();
+    const { token, role, logout } = useAuth();
 
     const handleLogout = () => {
         logout();
@@ -24,15 +24,15 @@ export default function NavBar() {
                 </li>
                 <li>
                     {
-                        location.pathname !== "/about" && (
-                            <NavLink to="/about">About</NavLink>
+                        role === 1 && location.pathname !== "/products" && (
+                            <NavLink to="/products">Products</NavLink>
                         )
                     }
                 </li>
                 <li>
                     {
-                        location.pathname !== "/contact" && (
-                            <NavLink to="/contact">Contact</NavLink>
+                        role === 1 && location.pathname !== "/categories" && (
+                            <NavLink to="/categories">Categories</NavLink>
                         )
                     }
                 </li>

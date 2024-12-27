@@ -62,7 +62,7 @@ export class OrderController implements ControllerInterface {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /orders`);
             const orders = await sql.query("SELECT * FROM Orders");
-            res.status(200).send(orders);
+            res.status(200).send(orders[0]);
         } catch (error) {
             res.status(500).send({ error: "Error selecting orders" });
         }

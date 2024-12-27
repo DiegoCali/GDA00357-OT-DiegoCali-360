@@ -4,7 +4,7 @@ interface OrderProps {
     id: number;
     name: string;
     total: number;
-    state: string;
+    state: number;
 }
 
 const Order: React.FC<OrderProps> = ({ id, name, total, state }) => {

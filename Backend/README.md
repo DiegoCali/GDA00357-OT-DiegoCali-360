@@ -27,4 +27,4 @@ Some endpoints require authentication, to get the token you need to make a POST 
 ```
 This will return a token that you need to use in the headers of the requests that require authentication.
 >[!Important]
->All endpoinst need authentication except for the login endpoint. You can create new users with the admin >user for customer endpoints.
+>All endpoinst need authentication except for the login endpoint. You can create new users with the admin user for customer endpoints.

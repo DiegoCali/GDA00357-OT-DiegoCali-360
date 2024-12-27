@@ -23,8 +23,8 @@ export class AuthController {
             if (!checkPassword) {
                 throw new Error("Invalid password");
             }
-            const token = genToken(user[0]);
-            res.status(200).send({ message: "User logged in successfully", user: user[0], token: token });
+            const token = genToken(user[0]);            
+            res.status(200).send({ message: "User logged in successfully", role: user[0].RoleID, token: token });
         } catch (error) {
             res.status(500).send({ error: "Error logging in" });
         }
