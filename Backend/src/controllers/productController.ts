@@ -7,9 +7,9 @@ export class ProductController implements ControllerInterface {
     insert = async (req: Request, res: Response) => {
         try {
             console.log('\x1b[33m%s\x1b[0m',`POST /products`);
-            const { c_id, u_id, name, brand, code, price } = req.body;
+            const { c_id, u_id, name, brand, code, price, picture, stock } = req.body;
             await sql.query(
-                `EXEC InsertProduct :c_id, :u_id, :name, :brand, :code, :price;`,
+                `EXEC InsertProduct :c_id, :u_id, :name, :brand, :code, :price, :picture, :stock;`,
                 {
                     replacements: {
                         c_id,
@@ -17,7 +17,9 @@ export class ProductController implements ControllerInterface {
                         name,
                         brand,
                         code,                        
-                        price                        
+                        price,
+                        picture,
+                        stock               
                     },
                     type: QueryTypes.RAW,
                 }

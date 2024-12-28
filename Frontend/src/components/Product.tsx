@@ -4,10 +4,11 @@ interface ProductProps {
     id: number;
     name: string;
     price: number;
+    stock: number;
     img: string;
 }
 
-const Product: React.FC<ProductProps> = ({ id, name, price, img }) => {
+const Product: React.FC<ProductProps> = ({ id, name, price, stock, img }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -15,10 +16,13 @@ const Product: React.FC<ProductProps> = ({ id, name, price, img }) => {
     };
 
     return (
-        <div onClick={handleClick}>
+        <div onClick={handleClick} className='ProductCard'>
             <img src={img} alt={name} />
-            <h3>{name}</h3>
-            <p>{price}</p>
+            <div className='info'>
+                <h2>{name}</h2>
+                <p className='stock'>Stock: {stock}</p>
+                <p className='price'>Price: ${price}</p>            
+            </div>
         </div>
     );
 };

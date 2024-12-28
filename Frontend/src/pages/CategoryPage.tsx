@@ -23,20 +23,23 @@ export default function CategoryPage() {
     }, []);
 
     return (
-        <div>
-            <h1>Category Page</h1>            
+        <div>                    
             <p>
                 {token ? (
                     role === 1 ? (
                         <div>
                             <h2>Categories</h2>
+                            <div className="CategoryContainer">
                             {categoriesData.map((category: any) => (
                                 <Category 
                                     id={category.CategoryID}
                                     name={category.category_name}                                    
                                  />
                             ))}
-                            <NavLink to="/new-category">Add Category</NavLink>
+                            </div>
+                            <div className="navlink-button">
+                                <NavLink to="/new-category">Add Category</NavLink>
+                            </div>                
                         </div>                        
                     ) : (                        
                         <span>You are not authorized to view this page.</span>

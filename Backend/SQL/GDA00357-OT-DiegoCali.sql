@@ -460,3 +460,13 @@ GO
 -- Create admin user
 EXEC InsertOperator 'operator@mail.com', 'Admin', '123456', '4444-4444', '1990-01-01';
 GO
+-- Procedure to get products by category
+CREATE PROCEDURE GetProductsOfCategory
+    @CategoryID INT
+AS
+BEGIN
+    SELECT ProductID, product_name, price, stock, picture
+    FROM Products
+    WHERE CategoryID = @CategoryID
+END
+GO

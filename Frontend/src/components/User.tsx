@@ -14,9 +14,9 @@ const User: React.FC<UserProps> = ({ id, name, email }) => {
     };
 
     return (
-        <div onClick={handleClick}>
-            <h3>{name}</h3>
-            <p>{email}</p>
+        <div onClick={handleClick} className="UserCard">
+            <p className="name">{name}</p>
+            <p className="email">{email}</p>
         </div>
     );
 };

@@ -23,13 +23,13 @@ export default function UsersPage() {
     }, []);
 
     return (
-        <div>
-            <h1>Users Page</h1>            
+        <div>                  
             <p>
                 {token ? (
                     role === 1 ? (
                         <div>
                             <h2>Users</h2>
+                            <div className="UserContainer">
                             {usersData.map((user: any) => (
                                 <User 
                                     id={user.UserID}
@@ -37,9 +37,13 @@ export default function UsersPage() {
                                     email={user.email}                                    
                                  />
                             ))}
-                            <NavLink to="/new-user/customer">Create Customer</NavLink>
-                            <br />
-                            <NavLink to="/new-user/operator">Create Operator</NavLink>
+                            </div>
+                            <div className="navlink-button">
+                                <NavLink to="/new-user/customer">Create Customer</NavLink>                            
+                            </div>
+                            <div className="navlink-button">
+                                <NavLink to="/new-user/operator">Create Operator</NavLink>
+                            </div>
                         </div>
                     ) : (                        
                         <span>You are not authorized to view this page.</span>

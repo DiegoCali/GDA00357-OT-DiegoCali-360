@@ -15,8 +15,8 @@ const CategoryFormPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Create Category</h1>
+        <div className='form-container'>
+            <h2>Create Category</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

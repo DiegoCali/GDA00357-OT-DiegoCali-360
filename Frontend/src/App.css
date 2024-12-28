@@ -41,7 +41,7 @@
   color: #888;
 }
 
-
+/*Navbar*/
 ul {
   list-style-type: none;
   margin: 0;
@@ -82,3 +82,193 @@ button:hover {
   background-color: #111;
   color: rgb(77, 77, 252);
 }
+/* Product Card */
+.ProductCard {
+  width: 200px; /* Ajusta el tamaño de la tarjeta */  
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.ProductCard:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  background-color: #f00000;  
+}
+
+.ProductCard img {
+  width: 100%;
+  height: 200px; /* Ajusta el alto de la imagen */
+  object-fit: cover; /* Para que la imagen se ajuste bien */
+}
+
+.ProductCard .info {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;  
+}
+
+.ProductCard .info h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #333;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; /* Si el nombre es largo, se recorta */
+}
+
+.ProductCard .info .stock {
+  font-size: 0.9rem;
+  color: #4caf50; /* Verde para indicar stock */
+}
+
+.ProductCard .info .price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e91e63; /* Rosa fuerte para el precio */
+}
+/* Product Container */
+.ProductContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap to the next line if the container is too narrow */
+  gap: 15px; /* Adds space between the cards */
+  justify-content: flex-start; /* Aligns cards to the left, change to center or space-around if needed */
+}
+/* User Card */
+.UserContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap to the next line if necessary */
+  gap: 15px; /* Adds spacing between cards */
+  justify-content: flex-start; /* Aligns cards to the left */
+  padding: 10px; /* Adds padding around the container */
+}
+
+.UserCard {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  width: 300px; /* Fixed width for uniformity */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.UserCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.UserCard .name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px; /* Adds space between name and email */
+}
+
+.UserCard .email {
+  font-size: 0.9rem;
+  color: #666;
+  word-wrap: break-word; /* Ensures long emails break into multiple lines */
+}
+/* Category Card */
+.CategoryContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap to the next line if necessary */
+  gap: 15px; /* Adds spacing between cards */
+  justify-content: flex-start; /* Aligns cards to the left */
+  padding: 10px; /* Adds padding around the container */
+}
+
+.CategoryCard {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  width: 200px; /* Fixed width for uniformity */
+  text-align: center; /* Centers the category name */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.CategoryCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.CategoryCard .name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+/* Form */
+* {
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width */
+}
+
+.form-container {
+  width: 100%;
+  max-width: 500px; /* Limits the form width */
+  margin: 20px auto; /* Centers the form */
+  padding: 20px;
+  background-color: #fff; /* White background for the form container */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333; /* Dark gray for the title */
+  margin-bottom: 15px; /* Adds space below the title */
+  text-align: center; /* Centers the title */
+}
+
+.form-container input {
+  width: 100%; /* Makes the inputs take full width of the container */
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #333; /* Dark gray border */
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333; /* Dark gray text color for inputs */
+  background-color: #f7f7f7; /* Light gray background for inputs */
+  transition: border-color 0.3s;
+}
+
+.form-container input:focus {
+  border-color: #555; /* Darker gray when focused */
+  outline: none;
+  background-color: #fff; /* Lighter background when focused */
+}
+/* Button NavLink*/
+.navlink-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.navlink-button:hover {
+  background-color: #555; /* Slightly lighter background on hover */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.navlink-button:active {
+  background-color: #222; /* Even darker background when active */
+}
+

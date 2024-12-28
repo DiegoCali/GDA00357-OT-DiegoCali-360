@@ -10,3 +10,8 @@ export const createCategory = async (token: string, user_id: number, category_na
     const body = { user_id, category_name };
     return await post("/categories", body, header);
 }
+
+export const getProducts = async (token: string, id: number) => {
+    const header = { authorization: `Bearer ${token}` };
+    return await get(`/categories/${id}/products`, header);
+}

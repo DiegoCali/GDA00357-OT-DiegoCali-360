@@ -19,6 +19,7 @@ const UsersFormPage: React.FC = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
+        // if error, show error message
         event.preventDefault();
         if (kind === "operator") {
             await createOperator(token, email, name, password, phone, bdate);
@@ -29,8 +30,8 @@ const UsersFormPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Create User</h1>
+        <div className="form-container">
+            <h2>Create User</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

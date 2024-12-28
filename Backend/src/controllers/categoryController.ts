@@ -86,4 +86,22 @@ export class CategoryController implements ControllerInterface {
     }
 
     // Private and individual methods
+    getProductsById = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`GET /categories/${id}/products`);
+            const products = await sql.query(
+                `EXEC GetProductsOfCategory :id;`,
+                {
+                    replacements: {
+                        id
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send(products[0]);
+        } catch (error) {
+            res.status(500).send({ error: "Error selecting products" });
+        }
+    }
 }

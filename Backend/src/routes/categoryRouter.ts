@@ -11,5 +11,6 @@ categoryRouter.get("/categories/:id", checkAuth([UserTypes.OPERATOR, UserTypes.C
 categoryRouter.post("/categories", checkAuth([UserTypes.OPERATOR]), categoryController.insert);
 categoryRouter.put("/categories/:id", checkAuth([UserTypes.OPERATOR]), categoryController.update);
 categoryRouter.delete("/categories/:id", checkAuth([UserTypes.OPERATOR]), categoryController.delete);
+categoryRouter.get("/categories/:id/products", checkAuth([UserTypes.OPERATOR, UserTypes.CUSTOMER]), categoryController.getProductsById);
 
 export { categoryRouter };
