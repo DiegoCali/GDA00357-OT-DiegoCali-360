@@ -7,12 +7,12 @@ export class CategoryController implements ControllerInterface {
     insert = async (req: Request, res: Response) => {
         console.log('\x1b[33m%s\x1b[0m',`POST /categories`);
         try {
-            const { user_id, category_name } = req.body;
+            const { u_id, category_name } = req.body;            
             const result = await sql.query(
-                `EXEC InsertProductCategory :user_id, :category_name;`,
+                `EXEC InsertProductCategory :u_id, :category_name;`,
                 {
                     replacements: {
-                        user_id,
+                        u_id,
                         category_name
                     },
                     type: QueryTypes.RAW,
