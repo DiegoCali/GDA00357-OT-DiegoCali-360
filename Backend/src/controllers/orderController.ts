@@ -8,22 +8,20 @@ export class OrderController implements ControllerInterface {
         try {
             console.log('\x1b[33m%s\x1b[0m',`POST /orders`);
             const { user_id, name, delivery, phone, email, products } = req.body;
-            const result : any = await sql.query(
-                `EXEC InsertOrder :user_id, :name, :delivery, :phone, :email;`,
+            await sql.query(
+                `EXEC InsertOrder :user_id, :name, :delivery, :phone, :email, products;`,
                 {
                     replacements: {
                         user_id,
                         name,
                         delivery,
                         phone,
-                        email
+                        email,
+                        products: JSON.stringify(products)
                     },
                     type: QueryTypes.RAW,
                 }
-            );
-            const order_id = result[0][0]?.OrderID;
-            const total = await this.setProducts(order_id, products);                     
-            await this.setOrderTotal(order_id, total);
+            );            
             res.status(200).send({ message: "Order created successfully" });
         } catch (error) {
             res.status(500).send({ error: `${error}` });
@@ -72,39 +70,5 @@ export class OrderController implements ControllerInterface {
         console.log('\x1b[32m%s\x1b[0m',`GET /orders/:id`);
     }
 
-    // Private and individual methods    
-    setProducts = async (order_id: number, products: any) => {
-        let total = 0;
-        const promises = products.map(async (product: any) => {
-            const { id, quantity } = product;
-            const result : any = await sql.query(
-                `EXEC InsertOrderDetail :order_id, :id, :quantity;`,
-                {
-                    replacements: {
-                        order_id,
-                        id,
-                        quantity
-                    },
-                    type: QueryTypes.RAW,
-                }
-            );
-            const subtotal = result[0][0]?.Subtotal;
-            total += subtotal;            
-        });
-        await Promise.all(promises);
-        return total;
-    }    
-
-    setOrderTotal = async (order_id: number, total: number) => {
-        await sql.query(
-            `EXEC SetOrder :order_id, :total;`,
-            {
-                replacements: {
-                    order_id,
-                    total
-                },
-                type: QueryTypes.RAW,
-            }
-        );
-    }
+    // Private and individual methods        
 }

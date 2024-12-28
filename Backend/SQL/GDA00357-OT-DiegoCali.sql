@@ -179,16 +179,86 @@ AS
 GO
 -- Procedure to Insert a new Order
 CREATE PROCEDURE InsertOrder
-    @UserID INT,    
-    -- creation_date would be created automatically
-    @order_name VARCHAR(45),
-    @delivery_address VARCHAR(45),
-    @phone VARCHAR(45),
-    @email VARCHAR(45)
+    @user_id INT,
+    @order_name NVARCHAR(255),
+    @delivery NVARCHAR(255),
+    @phone NVARCHAR(20),
+    @email NVARCHAR(255),
+    @order_details NVARCHAR(MAX) -- JSON containing product details
 AS
-    INSERT INTO Orders (UserID, StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
-    VALUES (@UserID, 5, GETDATE(), @order_name, @delivery_address, @phone, @email, NULL, 0)
-    SELECT SCOPE_IDENTITY() AS OrderID
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        DECLARE @order_id INT, @productId INT, @quantity INT, @price DECIMAL(10, 2), @subtotal DECIMAL(10, 2);
+        DECLARE @total_price DECIMAL(10, 2) = 0;
+
+        -- Insert into Orders table
+        INSERT INTO Orders (StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
+        VALUES (1, GETDATE(), @order_name, @delivery, @phone, @email, NULL, 0);
+
+        -- Get the newly created OrderID
+        SET @order_id = SCOPE_IDENTITY();
+
+        -- Parse the JSON order details
+        DECLARE @details TABLE (
+            ProductID INT,
+            Quantity INT
+        );
+
+        INSERT INTO @details (ProductID, Quantity)
+        SELECT 
+            ProductID,
+            Quantity
+        FROM OPENJSON(@order_details)
+        WITH (
+            ProductID INT '$.id',
+            Quantity INT '$.quantity'
+        );
+
+        -- Insert each product into OrderDetails
+        DECLARE detail_cursor CURSOR FOR
+            SELECT ProductID, Quantity FROM @details;
+
+        OPEN detail_cursor;
+        FETCH NEXT FROM detail_cursor INTO @productId, @quantity;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            -- Get the price of the product
+            SELECT @price = price FROM Products WHERE ProductID = @productId;
+
+            -- Calculate the subtotal
+            SET @subtotal = @price * @quantity;
+
+            -- Insert into OrderDetails
+            INSERT INTO OrderDetails (OrderID, ProductID, quantity, price, subtotal)
+            VALUES (@order_id, @productId, @quantity, @price, @subtotal);
+
+            -- Update the total price
+            SET @total_price += @subtotal;
+
+            FETCH NEXT FROM detail_cursor INTO @productId, @quantity;
+        END;
+
+        CLOSE detail_cursor;
+        DEALLOCATE detail_cursor;
+
+        -- Update the total price in Orders
+        UPDATE Orders
+        SET total_price = @total_price
+        WHERE OrderID = @order_id;
+
+        COMMIT TRANSACTION;
+
+        -- Return the new OrderID
+        SELECT @order_id AS OrderID;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
 GO
 -- Procedure to Insert a new Order Detail
 CREATE PROCEDURE InsertOrderDetail
