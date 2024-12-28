@@ -76,7 +76,7 @@ CREATE TABLE Products
     StateID INT NOT NULL FOREIGN KEY REFERENCES States(StateID),
     price FLOAT NULL,
     creation_date DATETIME NULL,
-    picture BINARY NULL
+    picture VARCHAR(255) NULL
 )
 GO
 -- Create the table for Orders
@@ -168,11 +168,13 @@ CREATE PROCEDURE InsertProduct
     @product_name VARCHAR(45),
     @brand VARCHAR(45),
     @code VARCHAR(45),        
-    @price FLOAT
+    @price FLOAT,
+    @picture VARCHAR(255),
+    @initial_stock INT
     -- creation_date would be created automatically    
 AS
     INSERT INTO Products (CategoryID, UserID, product_name, brand, code, stock, StateID, price, creation_date, picture)
-    VALUES (@CategoryID, @UserID, @product_name, @brand, @code, 0, 5, @price, GETDATE(), NULL)
+    VALUES (@CategoryID, @UserID, @product_name, @brand, @code, @initial_stock, 5, @price, GETDATE(), @picture)
     SELECT SCOPE_IDENTITY() AS ProductID
 GO
 -- Procedure to Insert a new Order
@@ -288,7 +290,7 @@ CREATE PROCEDURE UpdateProduct
     @code VARCHAR(45),
     @stock INT,
     @price FLOAT,
-    @picture BINARY
+    @picture VARCHAR(255)
 AS
     UPDATE Products
     SET product_name = @product_name,
