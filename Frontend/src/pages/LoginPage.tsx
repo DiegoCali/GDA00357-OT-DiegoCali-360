@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/authStore';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-const LoginPage: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const LoginPage: React.FC = () => {    
+    const schema = yup.object().shape({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+    });
+    const { register, handleSubmit, formState:{ errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        await login(email, password);
-        navigate('/');
-    };
+    const onSubmit = async (data: any) => {
+        try {
+            await login(data);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className='form-container'>
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <input
                     type="email"
                     placeholder="Email"
-                    value={email}    
-                    onChange={(event) => setEmail(event.target.value)}                
-                />
+                    {...register('email')}             
+                />                
                 <br />
+                <p className='error-message'>{errors.email?.message}</p>
                 <input
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    {...register('password')}
                 />
                 <br />
+                <p className='error-message'>{errors.password?.message}</p>
                 <button type="submit">Login</button>
             </form>
         </div>

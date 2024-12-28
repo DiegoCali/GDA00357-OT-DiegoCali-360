@@ -42,7 +42,7 @@ export default function CategoryContentPage() {
                         ))}
                         </div>
                         <div className="navlink-button">
-                            <NavLink to={`/new-product/${id}`}> Add Product </NavLink>  
+                            <NavLink to={`/new-product/${id}/${name}`}> Add Product </NavLink>  
                         </div>                          
                     </div>
                 ) : (

@@ -271,4 +271,9 @@ button:hover {
 .navlink-button:active {
   background-color: #222; /* Even darker background when active */
 }
-
+/* Error Message */
+.error-message {
+  color: #f44336; /* Red color for error messages */
+  font-size: 0.9rem;
+  margin: 5px 0;
+}

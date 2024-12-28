@@ -97,18 +97,18 @@ export class UserController implements ControllerInterface {
     // Private and individual methods
     private insertOperator = async (req: Request, res: Response) => {
         try {                 
-            const { email, user_name, user_password, phone, birth_date } = req.body;            
-            const clean_date = new Date(birth_date).toISOString().split('T')[0];
-            const hashedPassword = hashPassword(user_password);
+            const { email, name, password, phone, bdate } = req.body;            
+            const clean_date = new Date(bdate).toISOString().split('T')[0];
+            const hashedPassword = hashPassword(password);
             const result : any = await sql.query(
-                `EXEC InsertOperator :email, :name, :password, :phone, :birthdate;`,
+                `EXEC InsertOperator :email, :name, :password, :phone, :bdate;`,
                 {
                   replacements: {
                     email,            
-                    name: user_name,        
+                    name,        
                     password: hashedPassword,    
                     phone,            
-                    birthdate: clean_date, 
+                    bdate: clean_date, 
                   },
                   type: QueryTypes.RAW,
                 }
@@ -123,18 +123,18 @@ export class UserController implements ControllerInterface {
 
     private insertCustomer = async (req: Request, res: Response) => {
         try {            
-            const { email, user_name, user_password, phone, birth_date, cy_name, cm_name, address, c_phone, c_email} = req.body;            
-            const clean_date = new Date(birth_date).toISOString().split('T')[0];            
-            const hashedPassword = hashPassword(user_password);
+            const { email, name, password, phone, bdate, cy_name, cm_name, address, c_phone, c_email} = req.body;            
+            const clean_date = new Date(bdate).toISOString().split('T')[0];            
+            const hashedPassword = hashPassword(password);
             const result : any = await sql.query(
-                `EXEC InsertCustomer :email, :name, :password, :phone, :birthdate, :cy_name, :cm_name, :address, :c_phone, :c_email;`,
+                `EXEC InsertCustomer :email, :name, :password, :phone, :bdate, :cy_name, :cm_name, :address, :c_phone, :c_email;`,
                 {
                   replacements: {
                     email,            
-                    name: user_name,        
+                    name,        
                     password: hashedPassword,    
                     phone,            
-                    birthdate: clean_date, 
+                    bdate: clean_date, 
                     cy_name,
                     cm_name,
                     address,

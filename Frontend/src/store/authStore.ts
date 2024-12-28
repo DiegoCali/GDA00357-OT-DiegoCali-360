@@ -9,7 +9,7 @@ interface AuthState {
     setRole: (role: number) => void;
     setUserId: (user_id: number) => void;
     logout: () => void;
-    login: (email: string, password: string) => void;    
+    login: (body: any) => void;    
 }
 
 export const useAuth = create<AuthState>((set) => ({
@@ -20,9 +20,9 @@ export const useAuth = create<AuthState>((set) => ({
     setRole: (role) => set({ role }),
     setUserId: (user_id) => set({ user_id }),
     logout: () => set({ token: "" }),
-    login: async (email, password) => {
+    login: async (body: any) => {
         try {
-            const { message, user_id, role, token } = await login(email, password);            
+            const { message, user_id, role, token } = await login(body);            
             console.log(message);
             set({ user_id });
             set({ role });

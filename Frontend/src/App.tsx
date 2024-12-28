@@ -22,7 +22,7 @@ function App() {
         <Route path="/categories" element={<CategoryPage />} />
         <Route path="/categories/:id/:name" element={<CategoryContentPage />} />
         <Route path="/new-category" element={<CategoryFormPage />} />     
-        <Route path="/new-product/:id" element={<ProductFormPage />} />
+        <Route path="/new-product/:id/:category" element={<ProductFormPage />} />
         <Route path="/users" element={<UsersPage />} />   
         <Route path="/new-user/:kind" element={<UsersFormPage />} />
       </Routes>

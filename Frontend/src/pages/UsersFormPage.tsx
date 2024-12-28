@@ -1,108 +1,113 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../store/authStore";
 import { createCustomer, createOperator } from "../api/users";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const UsersFormPage: React.FC = () => {
-    const { kind } = useParams<{ kind: "operator" | "customer" }>();
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [phone, setPhone] = useState("");
-    const [bdate, setBdate] = useState("");
-    const [cy_name, setCyName] = useState("");
-    const [cm_name, setCmName] = useState("");
-    const [address, setAddress] = useState("");
-    const [c_phone, setCPhone] = useState("");
-    const [c_mail, setCMail] = useState("");
+    const schema = yup.object().shape({
+        email: yup.string().email().required(),
+        name: yup.string().required(),
+        password: yup.string().required(),
+        phone: yup.string().required(),
+        bdate: yup.string().required(),
+        cy_name: yup.string(),
+        cm_name: yup.string(),
+        address: yup.string(),
+        c_phone: yup.string(),
+        c_email: yup.string(),
+    });
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+    });
+    const { kind } = useParams<{ kind: "operator" | "customer" }>();    
     const { token } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        // if error, show error message
-        event.preventDefault();
-        if (kind === "operator") {
-            await createOperator(token, email, name, password, phone, bdate);
-        } else {
-            await createCustomer(token, email, name, password, phone, bdate, cy_name, cm_name, address, c_phone, c_mail);
+    const onSubmit = async (data: any) => {
+        try {
+            if (kind === "operator") {
+                await createOperator(token, data);
+            } else {
+                await createCustomer(token, data);
+            }
+            navigate("/users");
+        } catch (error) {
+            alert(error);
         }
-        navigate("/users");
     };
 
     return (
         <div className="form-container">
             <h2>Create User</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <input
                     type="text"
                     placeholder="Email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    {...register("email")}
                 />
                 <br />
+                <p className="error-message">{errors.email?.message}</p>
                 <input
                     type="text"
                     placeholder="Name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    {...register("name")}
                 />
                 <br />
+                <p className="error-message">{errors.name?.message}</p>
                 <input
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    {...register("password")}
                 />
                 <br />
+                <p className="error-message">{errors.password?.message}</p>
                 <input
                     type="text"
                     placeholder="Phone"
-                    value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                    {...register("phone")}
                 />
                 <br />
+                <p className="error-message">{errors.phone?.message}</p>
                 <input
                     type="date"
                     placeholder="Birth Date"
-                    value={bdate}
-                    onChange={(event) => setBdate(event.target.value)}
+                    {...register("bdate")}
                 />
                 <br />
+                <p className="error-message">{errors.bdate?.message}</p>
                 {kind === "customer" && (
                     <>
                         <input
                             type="text"
                             placeholder="Company Name"
-                            value={cy_name}
-                            onChange={(event) => setCyName(event.target.value)}
+                            {...register("cy_name")}
                         />
                         <br />
                         <input
                             type="text"
                             placeholder="Comercial Name"
-                            value={cm_name}
-                            onChange={(event) => setCmName(event.target.value)}
+                            {...register("cm_name")}
                         />
                         <br />
                         <input
                             type="text"
                             placeholder="Address"
-                            value={address}
-                            onChange={(event) => setAddress(event.target.value)}
+                            {...register("address")}
                         />
                         <br />
                         <input
                             type="text"
                             placeholder="Contact Phone"
-                            value={c_phone}
-                            onChange={(event) => setCPhone(event.target.value)}
+                            {...register("c_phone")}
                         />
                         <br />
                         <input
                             type="text"
                             placeholder="Contact Email"
-                            value={c_mail}
-                            onChange={(event) => setCMail(event.target.value)}
+                            {...register("c_email")}
                         />
                         <br />
                     </>
