@@ -13,7 +13,7 @@ export default function NavBar() {
     }
 
     return (
-        <nav>
+        <div className="navbar-container">
             <ul>
                 <li>
                     {
@@ -38,7 +38,7 @@ export default function NavBar() {
                 </li>
                 {token ? (
                     <li>
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout} className="navbar-button">Logout</button>
                     </li>
                 ) : (
                     <li>
@@ -46,6 +46,6 @@ export default function NavBar() {
                     </li>
                 )}
             </ul>
-        </nav>
+        </div>
     );
 }

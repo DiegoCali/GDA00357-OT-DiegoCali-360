@@ -42,46 +42,54 @@
 }
 
 /*Navbar*/
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
+.navbar-container {          
+  justify-content: space-between; /* Keeps links on the left and button on the right */
+  align-items: center; /* Ensures vertical alignment for text and button */  
+  padding: 10px 20px;
+  background-color: #333; /* Dark background for the navbar */
+  color: #fff; /* White text color */  
 }
 
-li {
-  float: left;  
+.navbar-container ul {
+  display: flex; /* Aligns navigation items horizontally */
+  list-style: none; /* Removes default bullet points */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
 }
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  margin: 8px 0;
-  text-decoration: none;
+.navbar-container li {
+  margin: 0 15px; /* Adds spacing between navigation items */
+  font-size: 1rem; /* Font size for navigation links */  
+  display: flex;
+  align-items: center;
 }
 
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
+.navbar-container li a{
+  text-decoration: none; /* Removes underline for NavLink */  
+  color: #fff; /* White text color */
+  font-size: 1rem;
+  transition: color 0.3s ease; /* Smooth hover effect */
 }
 
-button {
-  background-color: #333;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+.navbar-container li a:hover {
+  color: #646cff; /* Gold color on hover */
+}
+
+.navbar-container .navbar-button {
+  padding: 8px 15px;
+  background-color: #333; /* Gold button color */
+  color: #fff;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
-  width: 100%;
+  transition: background-color 0.3s ease; /* Smooth hover effect */
 }
 
-button:hover {
-  background-color: #111;
-  color: rgb(77, 77, 252);
+.navbar-container .navbar-button:hover {
+  background-color: #646cff /* Darker gold on hover */
 }
+
 /* Product Card */
 .ProductCard {
   width: 200px; /* Ajusta el tamaño de la tarjeta */  
@@ -277,3 +285,47 @@ button:hover {
   font-size: 0.9rem;
   margin: 5px 0;
 }
+/* User Information Profile */
+.profile-container {
+  width: 100%;
+  max-width: 500px; /* Limits the profile width */
+  margin: 20px auto; /* Centers the profile */
+  padding: 20px;
+  background-color: #fff; /* White background for the container */
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-family: Arial, sans-serif;
+  color: #333; /* Dark text for readability */
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333; /* Dark color for emphasis */
+  margin-bottom: 10px; /* Adds spacing below the name */
+  text-align: center; /* Centers the name */
+}
+
+.profile-role {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555; /* Slightly lighter color for the role */
+  text-align: center;
+  margin-bottom: 20px; /* Adds spacing below the role */
+}
+
+.profile-info {
+  margin-top: 15px;
+}
+
+.profile-info p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 8px 0; /* Adds spacing between each piece of info */
+}
+
+.profile-info p span {
+  font-weight: bold; /* Highlights the label */
+  color: #555; /* Slightly lighter color for the labels */
+}
+
