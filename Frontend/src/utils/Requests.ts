@@ -22,8 +22,7 @@ const request = async (url: string, method: string, body?: any, customHeaders?: 
         }
 
         return data;
-    } catch (error) {
-        console.error("HTTP ERROR:", error);
+    } catch (error) {        
         throw error;
     }
 };

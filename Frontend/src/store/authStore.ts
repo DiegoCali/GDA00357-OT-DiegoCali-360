@@ -19,7 +19,11 @@ export const useAuth = create<AuthState>((set) => ({
     setToken: (token) => set({ token }),
     setRole: (role) => set({ role }),
     setUserId: (user_id) => set({ user_id }),
-    logout: () => set({ token: "" }),
+    logout: () => {
+        set({ token: "" });
+        set({ role: -1 });
+        set({ user_id: -1 });
+    },
     login: async (body: any) => {
         try {
             const { message, user_id, role, token } = await login(body);            
@@ -28,7 +32,7 @@ export const useAuth = create<AuthState>((set) => ({
             set({ role });
             set({ token });
         } catch (error) {
-            console.error("Login failed:", error);
+            throw error;
         }
     }
 }));

@@ -1,25 +1,34 @@
 import { useAuth } from "../store/authStore";
 import { useEffect, useState } from "react";
 import { getOrders } from "../api/orders";
+import { useNavigate } from "react-router-dom";
 import Order from "../components/Order";
 
 
 export default function MainPage() {
     const [ordersData, setOrdersData] = useState([]);
-    const { token, role } = useAuth();    
+    const { token, role } = useAuth(); 
+    const navigate = useNavigate();   
 
     const handleGetOrders = async () => {
         try {
             const response = await getOrders(token);
             console.log(response);
             setOrdersData(response);
-        } catch (error) {
+        } catch (error) {        
             console.error("Failed to get orders:", error);
         }
     }
 
     useEffect(() => {
-        handleGetOrders();
+        if (role === 1 && token) {
+            handleGetOrders();
+        }else if (role === 2 && token) {        
+            navigate("/categories");
+        }else {
+            alert("You are not authorized to view this page.");
+            navigate("/login");
+        }
     }, []);
 
     return (
@@ -39,7 +48,7 @@ export default function MainPage() {
                                  />
                             ))}
                         </div>
-                    ) : (                        
+                    ) : (                                                
                         <span>You are not authorized to view this page.</span>
                     )                    
                 ) : (

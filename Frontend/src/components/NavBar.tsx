@@ -15,34 +15,38 @@ export default function NavBar() {
     return (
         <div className="navbar-container">
             <ul>
-                <li>
-                    {
-                        location.pathname !== "/" && (
+                {
+                    location.pathname !== "/" && (
+                        <li>
                             <NavLink to="/">Home</NavLink>
+                        </li>
+                    )                   
+                }
+                {
+                    location.pathname !== "/categories" && (
+                        role === 1 && (
+                            <li>
+                                <NavLink to="/categories">Categories</NavLink>
+                            </li>
                         )
-                    }
-                </li>
-                <li>
-                    {
-                        role === 1 && location.pathname !== "/users" && (
-                            <NavLink to="/users">Users</NavLink>
+                    )                   
+                }
+                {
+                    location.pathname !== "/users" && (
+                        role === 1 && (
+                            <li>
+                                <NavLink to="/users">Users</NavLink>
+                            </li>
                         )
-                    }
-                </li>
-                <li>
-                    {
-                        role === 1 && location.pathname !== "/categories" && (
-                            <NavLink to="/categories">Categories</NavLink>
-                        )
-                    }
-                </li>
+                    )
+                }
                 {token ? (
                     <li>
-                        <button onClick={handleLogout} className="navbar-button">Logout</button>
+                        <NavLink to="/" onClick={handleLogout}>Logout</NavLink>                    
                     </li>
                 ) : (
                     <li>
-                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : "")}>Login</NavLink>
+                        <NavLink to="/login">Login</NavLink>
                     </li>
                 )}
             </ul>

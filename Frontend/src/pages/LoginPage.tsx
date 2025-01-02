@@ -22,6 +22,7 @@ const LoginPage: React.FC = () => {
             navigate('/');
         } catch (error) {
             console.log(error);
+            alert('Failed to login');                    
         }
     }
 

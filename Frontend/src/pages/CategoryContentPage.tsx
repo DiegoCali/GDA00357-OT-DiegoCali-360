@@ -7,7 +7,7 @@ import Product from "../components/Product";
 export default function CategoryContentPage() {
     const { id, name } = useParams<{ id: string, name: string }>();
     const [productsData, setProductsData] = useState([]);
-    const { token } = useAuth();
+    const { token, role } = useAuth();
 
     const handleGetProducts = async () => {
         try {
@@ -41,9 +41,11 @@ export default function CategoryContentPage() {
                             />
                         ))}
                         </div>
-                        <div className="navlink-button">
-                            <NavLink to={`/new-product/${id}/${name}`}> Add Product </NavLink>  
-                        </div>                          
+                        { role === 1 &&
+                            <div className="navlink-button">
+                                <NavLink to={`/new-product/${id}/${name}`}> Add Product </NavLink>  
+                            </div>     
+                        }                     
                     </div>
                 ) : (
                     <span>You are not logged in.</span>
