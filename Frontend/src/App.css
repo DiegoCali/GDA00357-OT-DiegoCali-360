@@ -328,4 +328,56 @@
   font-weight: bold; /* Highlights the label */
   color: #555; /* Slightly lighter color for the labels */
 }
+/* Product Information */
+/* Container for the product profile */
+.product-profile {
+  max-width: 800px; /* Restricts width for better readability */
+  margin: 20px auto; /* Centers the profile on the page */
+  padding: 20px;
+  background-color: #f9f9f9; /* Light gray background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: Arial, sans-serif; /* Clean font style */
+  color: #333; /* Text color for readability */
+}
 
+/* Product Name */
+.product-profile h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #222; /* Slightly darker for emphasis */
+}
+
+/* Product Details Section */
+.product-details {
+  margin-top: 20px;
+}
+
+.product-details h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #555; /* Subtle emphasis for section title */
+}
+
+/* Product Image and Information Container */
+.product-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* Adds space between image and text */
+}
+
+/* Product Image */
+.product-info img {
+  width: 150px;
+  height: auto; /* Maintains aspect ratio */
+  border-radius: 10px; /* Optional: Rounds the corners of the image */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the image */  
+}
+
+/* Product Text Info */
+.product-info p {
+  margin: 5px 0; /* Space between text lines */
+  font-size: 1rem;
+  line-height: 1.6; /* Line height for readability */  
+  display: flex; /* Aligns text horizontally */  
+}

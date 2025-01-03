@@ -88,8 +88,8 @@ export class ProductController implements ControllerInterface {
         try {
             const { id } = req.params;
             console.log('\x1b[32m%s\x1b[0m',`GET /products/${id}`);
-            const products = await sql.query(`SELECT * FROM Products WHERE id = ${id}`);
-            res.status(200).send(products);
+            const products = await sql.query(`SELECT * FROM Products WHERE ProductID = ${id}`);
+            res.status(200).send(products[0][0]);
         } catch (error) {
             res.status(500).send({ error: "Error selecting product" });
         }

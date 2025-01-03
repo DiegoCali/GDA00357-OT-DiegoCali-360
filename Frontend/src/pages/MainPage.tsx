@@ -25,8 +25,7 @@ export default function MainPage() {
             handleGetOrders();
         }else if (role === 2 && token) {        
             navigate("/categories");
-        }else {
-            alert("You are not authorized to view this page.");
+        }else {               
             navigate("/login");
         }
     }, []);

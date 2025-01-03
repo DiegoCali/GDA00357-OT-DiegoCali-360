@@ -8,7 +8,9 @@ import UsersPage from './pages/UsersPage'
 import UsersFormPage from './pages/UsersFormPage'
 import UserContentPage from './pages/UserContentPage'
 import CategoryContentPage from './pages/CategoryContentPage'
+import ProductContentPage from './pages/ProductContentPage'
 import ProductFormPage from './pages/ProductFormPage'
+import CartPage from './pages/CartPage'
 
 import NavBar from './components/NavBar'
 
@@ -23,11 +25,13 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/categories/:id/:name" element={<CategoryContentPage />} />
+          <Route path="/product/:id" element={<ProductContentPage />} />
           <Route path="/new-category" element={<CategoryFormPage />} />     
           <Route path="/new-product/:id/:category" element={<ProductFormPage />} />
           <Route path="/users" element={<UsersPage />} />  
           <Route path="/users/:id" element={<UserContentPage />} />
           <Route path="/new-user/:kind" element={<UsersFormPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </BrowserRouter>
     </div>
