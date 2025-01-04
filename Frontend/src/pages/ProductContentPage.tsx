@@ -6,6 +6,7 @@ import { getProductById } from "../api/products";
 export default function ProductContentPage() {
     const { id } = useParams<{ id: string }>();
     const [productData, setProductData] = useState<any>({});
+    const [quantity, setQuantity] = useState(0);
     const { token, role, addToCart} = useAuth();
     const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ export default function ProductContentPage() {
         try {
             // Add to cart logic here
             alert("Product added to cart.");
-            addToCart(productData.ProductID);            
+            addToCart(productData.ProductID, quantity);           
         } catch (error) {
             console.error("Failed to add to cart:", error);
         }
@@ -69,9 +70,17 @@ export default function ProductContentPage() {
                     }
                     {
                         role === 2 && (
-                            <button onClick={handleAddToCart}>Add to Cart</button>
+                            <div>
+                                <label>Quantity:</label>
+                                <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} />
+                            </div>                          
                         )
                     }
+                    {
+                        role === 2 && (
+                            <button onClick={handleAddToCart}>Add to Cart</button>
+                        )
+                    }                
                 </div>
             </div>
         </div>

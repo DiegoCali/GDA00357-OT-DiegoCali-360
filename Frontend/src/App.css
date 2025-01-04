@@ -381,3 +381,66 @@
   line-height: 1.6; /* Line height for readability */  
   display: flex; /* Aligns text horizontally */  
 }
+/* Product Cart */
+/* Shopping Cart Product Card */
+.cart-product-card {
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  gap: 15px; /* Space between image and details */
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9; /* Light gray background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: Arial, sans-serif;
+  color: #333; /* Text color */
+  position: relative; /* Ensures delete button can be positioned */
+}
+
+/* Product Image */
+.cart-product-card img {
+  width: 80px; /* Fixed size for consistency */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Slight rounding for images */
+  object-fit: cover; /* Ensures image covers the area without distortion */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for images */
+}
+
+/* Product Details */
+.cart-product-info {
+  display: flex;
+  flex-direction: column; /* Stack product details */
+  gap: 5px; /* Space between text */
+  flex-grow: 1; /* Allows the text section to expand */
+}
+
+.cart-product-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222; /* Slightly darker for emphasis */
+}
+
+.cart-product-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666; /* Subtle color for less emphasis */
+}
+
+/* Quantity and Price Section */
+.cart-product-quantity {
+  display: flex;
+  flex-direction: column; /* Stack quantity and price */
+  align-items: flex-end; /* Align to the right */
+}
+
+.cart-product-quantity p {
+  margin: 5px 0; /* Space between quantity and price */
+  font-size: 0.9rem;
+  color: #333; /* Text color */
+}
+
+.cart-product-card:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}

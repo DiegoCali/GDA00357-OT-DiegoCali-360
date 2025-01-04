@@ -5,13 +5,13 @@ interface AuthState {
     token: string; 
     role: number; 
     user_id: number;  
-    cart: number[];
+    cart: { id: number, quantity: number }[];
     setToken: (token: string) => void;
     setRole: (role: number) => void;
     setUserId: (user_id: number) => void;
     logout: () => void;
     login: (body: any) => void;    
-    addToCart: (product: number) => void;
+    addToCart: (product: number, quantity: number) => void;
     removeFromCart: (product: number) => void;    
 }
 
@@ -41,11 +41,19 @@ export const useAuth = create<AuthState>((set) => ({
             throw error;
         }
     },
-    addToCart: (product: number) => {
+    addToCart: (product: number, quantity: number) => {
         console.log("Product added to cart:", product);
-        set((state) => ({ cart: [...state.cart, product] }));        
+        set((state) => {
+            const index = state.cart.findIndex((item) => item.id === product);
+            if (index !== -1) {
+                state.cart[index].quantity += quantity;
+                return { cart: state.cart };
+            }
+            return { cart: [...state.cart, { id: product, quantity }] };
+        });
     },
     removeFromCart: (product: number) => {
-        set((state) => ({ cart: state.cart.filter((item) => item !== product) }));
+        console.log("Product removed from cart:", product);
+        set((state) => ({ cart: state.cart.filter((item) => item.id !== product) }));
     }    
 }));

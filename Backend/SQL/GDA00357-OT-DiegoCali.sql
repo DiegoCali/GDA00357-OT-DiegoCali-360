@@ -238,6 +238,10 @@ BEGIN
             -- Update the total price
             SET @total_price += @subtotal;
 
+            -- Update the stock of the product
+            SET @quantity = -@quantity;
+            EXEC UpdateStock @productId, @quantity;
+
             FETCH NEXT FROM detail_cursor INTO @productId, @quantity;
         END;
 
