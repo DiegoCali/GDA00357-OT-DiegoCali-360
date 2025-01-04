@@ -19,3 +19,8 @@ export const getUserById = async (token: string, id: number) => {
     const headers = { authorization: `Bearer ${token}` }
     return await get(`/users/${id}`, headers);
 }
+
+export const getCustomerData = async (token: string, id: number) => {
+    const headers = { authorization: `Bearer ${token}` }
+    return await get(`/customer/${id}`, headers);
+}

@@ -195,7 +195,7 @@ BEGIN
 
         -- Insert into Orders table
         INSERT INTO Orders (StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
-        VALUES (1, GETDATE(), @order_name, @delivery, @phone, @email, NULL, 0);
+        VALUES (2, GETDATE(), @order_name, @delivery, @phone, @email, NULL, 0);
 
         -- Get the newly created OrderID
         SET @order_id = SCOPE_IDENTITY();
@@ -236,11 +236,7 @@ BEGIN
             VALUES (@order_id, @productId, @quantity, @price, @subtotal);
 
             -- Update the total price
-            SET @total_price += @subtotal;
-
-            -- Update the stock of the product
-            SET @quantity = -@quantity;
-            EXEC UpdateStock @productId, @quantity;
+            SET @total_price += @subtotal;            
 
             FETCH NEXT FROM detail_cursor INTO @productId, @quantity;
         END;
@@ -442,10 +438,46 @@ GO
 -- Procedure to Confirm an Order
 CREATE PROCEDURE ConfirmOrder
     @OrderID INT
-AS
-    UPDATE Orders
-    SET StateID = 1
-    WHERE OrderID = @OrderID
+AS    
+    -- Get the Order Details (ProductID, Quantity) and save them in a Table,
+    -- Generate a pointer and update stock with ProductID and Quantity using UpdateStock function
+    -- Wrap all this in a transaction, so that if any of the updates fail, the whole transaction is rolled back
+    BEGIN TRANSACTION
+        BEGIN TRY
+        UPDATE Orders
+        SET StateID = 1
+        WHERE OrderID = @OrderID
+        DECLARE @OrderDTable TABLE
+        (
+            ProductID INT,
+            Quantity INT
+        )
+        INSERT INTO @OrderDTable
+        SELECT ProductID, Quantity
+        FROM OrderDTable
+        WHERE OrderID = @OrderID
+        DECLARE @Pointer INT
+        DECLARE @ProductID INT
+        DECLARE @Quantity INT
+        DECLARE OrderDetailsCursor CURSOR FOR
+        SELECT ProductID, Quantity
+        FROM @OrderDTable
+        OPEN OrderDetailsCursor
+        FETCH NEXT FROM OrderDetailsCursor INTO @ProductID, @Quantity
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            SET @Quantity = -@Quantity
+            EXEC UpdateStock @ProductID, @Quantity
+            FETCH NEXT FROM OrderDetailsCursor INTO @ProductID, @Quantity
+        END
+        CLOSE OrderDetailsCursor
+        DEALLOCATE OrderDetailsCursor
+    COMMIT TRANSACTION
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION
+        THROW
+    END CATCH
 GO
 -- Procedure to Deliver an Order
 CREATE PROCEDURE DeliverOrder

@@ -444,3 +444,79 @@
   background-color: #f0f0f0; /* Light gray background on hover */
   transform: scale(1.02); /* Slightly enlarge on hover */
 }
+/* Popup */
+/* Popup container */
+.popup {
+  position: fixed; /* Ensure the popup is fixed on the screen */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex; /* Flex to center the popup */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it appears above all other elements */
+}
+
+/* Inner popup */
+.popup-inner {
+  background-color: #fff; /* White background for the form */
+  padding: 20px;
+  width: 400px; /* Fixed width */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  text-align: center; /* Center-align text */
+}
+
+/* Form Fields */
+.popup-inner .field {
+  margin-bottom: 15px; /* Spacing between fields */
+  text-align: left; /* Align labels and inputs to the left */
+}
+
+.popup-inner .field p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.popup-inner .field input {
+  width: 100%; /* Full width for inputs */
+  padding: 8px;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Ensures padding does not affect width */
+}
+
+/* Error Messages */
+.popup-inner .field .error-message {
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: #ff4d4d; /* Red for error messages */
+}
+
+/* Popup Title */
+.popup-inner h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Confirm Button */
+.popup-inner button {
+  background-color: #333; /* Blue background */
+  color: #fff; /* White text */
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+  width: 100%;
+}
+
+.popup-inner button:hover {
+  background-color: #242424; /* Darker blue on hover */
+}

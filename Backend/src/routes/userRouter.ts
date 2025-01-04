@@ -11,5 +11,6 @@ userRouter.get("/users/:id", checkAuth([UserTypes.OPERATOR]), userController.sel
 userRouter.post("/register/:kind", userController.insert);
 userRouter.put("/users/:id", checkAuth([UserTypes.OPERATOR]), userController.update);
 userRouter.delete("/users/:id", checkAuth([UserTypes.OPERATOR]), userController.delete);
+userRouter.get("/customer/:id", checkAuth([UserTypes.OPERATOR, UserTypes.CUSTOMER]), userController.getCustomerData);
 
 export { userRouter };

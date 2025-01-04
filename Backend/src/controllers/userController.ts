@@ -94,6 +94,16 @@ export class UserController implements ControllerInterface {
         }
     }
 
+    getCustomerData = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`GET /customer/${id}`);
+            const customer = await sql.query(`SELECT * FROM Customers WHERE CustomerID = ${id}`);            
+            res.status(200).send(customer[0][0]);
+        } catch (error) {            
+            res.status(500).send({ error: "Error fetching customer data" });
+        }
+    }
     // Private and individual methods
     private insertOperator = async (req: Request, res: Response) => {
         try {                 
