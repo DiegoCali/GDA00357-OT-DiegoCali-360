@@ -5,6 +5,7 @@ import { getProductById } from "../api/products";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import EditProductPopup from "./EditProductPopup";
 
 export default function ProductContentPage() {
     const schema = yup.object().shape({
@@ -16,6 +17,7 @@ export default function ProductContentPage() {
     const { id } = useParams<{ id: string }>();
     const [productData, setProductData] = useState<any>({});    
     const { token, role, addToCart} = useAuth();
+    const [seen, setSeen] = useState(false);
     const navigate = useNavigate();
 
     const handleGetProduct = async () => {
@@ -43,6 +45,10 @@ export default function ProductContentPage() {
         }
     }
 
+    const toggle = () => {
+        setSeen(!seen);        
+    }
+
     useEffect(() => {
         handleGetProduct();
     }, []);
@@ -67,10 +73,8 @@ export default function ProductContentPage() {
                             }                        
                         </div>
                         {
-                            role === 1 && (
-                                <div className="navlink-button">
-                                    <NavLink to={`/edit-product/${id}`}>Edit Product</NavLink>
-                                </div>
+                            role === 1 && (                                
+                                <button onClick={toggle}>Edit Product</button>                                                                    
                             )
                         }
                         {
@@ -97,7 +101,8 @@ export default function ProductContentPage() {
                         }                
                         </form>
                     </div>
-                </div>            
+                </div>         
+                {seen && <EditProductPopup id={productData.ProductID} toggle={toggle} />}   
         </div>
     );
 }
