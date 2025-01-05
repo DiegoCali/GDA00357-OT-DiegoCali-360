@@ -1,6 +1,6 @@
 import { useAuth } from "../store/authStore";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, NavLink } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../api/products";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -46,6 +46,9 @@ export default function ProductContentPage() {
     }
 
     const toggle = () => {
+        if (seen) {
+            handleGetProduct();
+        }
         setSeen(!seen);        
     }
 
@@ -76,14 +79,7 @@ export default function ProductContentPage() {
                             role === 1 && (                                
                                 <button onClick={toggle}>Edit Product</button>                                                                    
                             )
-                        }
-                        {
-                            role === 1 && (
-                                <div className="navlink-button">
-                                    <NavLink to={`/delete-product/${id}`}>Delete Product</NavLink>
-                                </div>
-                            )
-                        }
+                        }                        
                         <form onSubmit={handleSubmit(handleAddToCart)}>
                         {
                             role === 2 && (

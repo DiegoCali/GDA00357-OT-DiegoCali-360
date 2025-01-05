@@ -11,8 +11,9 @@ export default function EditProductPopup(props: any) {
         brand: yup.string().required(),
         code: yup.string().required(),
         stock: yup.number().required(),
-        price: yup.number().required(),
+        price: yup.number().required(),        
         picture: yup.string().required(),
+        state: yup.number().required(),
     });
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -31,8 +32,9 @@ export default function EditProductPopup(props: any) {
 
     const onSubmit = async (data: any) => {
         try {
+
             await updateProduct(token, props.id, data);
-            alert("Product updated successfully.");
+            alert("Product updated successfully");
             props.toggle();
         } catch (error) {
             alert(error);
@@ -78,7 +80,14 @@ export default function EditProductPopup(props: any) {
                         <input type="text" defaultValue={product.picture} {...register('picture')} />
                         <p className="error-message">{errors.picture?.message}</p>
                     </div>
-                    <div>
+                    <div className="field">
+                        <p>State:</p>     
+                        <select {...register('state')} defaultValue={product.StateID}>
+                            <option value="5">Active</option>
+                            <option value="6">Inactive</option>
+                        </select>                   
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <button type="button" onClick={props.toggle}>Cancel</button>
                         <button type="submit">Save</button>                        
                     </div>                        

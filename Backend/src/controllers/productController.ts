@@ -34,9 +34,9 @@ export class ProductController implements ControllerInterface {
         try {        
             const { id } = req.params;
             console.log('\x1b[34m%s\x1b[0m',`PUT /products/${id}`);
-            const { name, brand, code, stock, price, picture } = req.body;                             
+            const { name, brand, code, stock, price, picture, state } = req.body;                             
             await sql.query(
-                `EXEC UpdateProduct :id, :name, :brand, :code, :stock, :price, :picture;`,
+                `EXEC UpdateProduct :id, :name, :brand, :code, :stock, :price, :picture, :state;`,
                 {
                     replacements: {
                         id: parseInt(id),
@@ -45,7 +45,8 @@ export class ProductController implements ControllerInterface {
                         code,
                         stock,
                         price,
-                        picture
+                        picture,
+                        state
                     },
                     type: QueryTypes.RAW,
                 }
