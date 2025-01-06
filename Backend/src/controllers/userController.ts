@@ -76,7 +76,9 @@ export class UserController implements ControllerInterface {
     select = async (req: Request, res: Response) => {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /users`);
-            const users = await sql.query("SELECT * FROM Users");
+            const users = await sql.query(
+                "SELECT * FROM Users WHERE StateID = 5"
+            );
             res.status(200).send(users[0]);
         } catch (error) {            
             res.status(500).send({ error: "Error fetching users" });

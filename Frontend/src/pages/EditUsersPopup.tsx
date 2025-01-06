@@ -10,8 +10,7 @@ export default function EditUsersPopup(props: any) {
         user_name: yup.string().required(),
         email: yup.string().required(),
         phone: yup.string().required(),
-        birth_date: yup.string().required(),
-        state: yup.number().required(),
+        birth_date: yup.string().required(),        
     });
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -67,14 +66,7 @@ export default function EditUsersPopup(props: any) {
                         <p>Birthdate:</p>
                         <input type="text" defaultValue={user.birth_date} {...register('birth_date')} />
                         <p className="error-message">{errors.birth_date?.message}</p>
-                    </div>
-                    <div className="field">
-                        <p>State:</p>
-                        <select defaultValue={user.StateID} {...register('state')}>
-                            <option value="5">Active</option>
-                            <option value="6">Inactive</option>
-                        </select>
-                    </div>
+                    </div>                    
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <button type="button" onClick={props.toggle}>Cancel</button>
                         <button type="submit">Save</button>                        

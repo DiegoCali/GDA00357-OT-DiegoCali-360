@@ -12,8 +12,7 @@ export default function EditProductPopup(props: any) {
         code: yup.string().required(),
         stock: yup.number().required(),
         price: yup.number().required(),        
-        picture: yup.string().required(),
-        state: yup.number().required(),
+        picture: yup.string().required(),        
     });
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -79,14 +78,7 @@ export default function EditProductPopup(props: any) {
                         <p>Picture:</p>
                         <input type="text" defaultValue={product.picture} {...register('picture')} />
                         <p className="error-message">{errors.picture?.message}</p>
-                    </div>
-                    <div className="field">
-                        <p>State:</p>     
-                        <select {...register('state')} defaultValue={product.StateID}>
-                            <option value="5">Active</option>
-                            <option value="6">Inactive</option>
-                        </select>                   
-                    </div>
+                    </div>                    
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <button type="button" onClick={props.toggle}>Cancel</button>
                         <button type="submit">Save</button>                        

@@ -1,7 +1,7 @@
 import { useAuth } from "../store/authStore";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getUserById, getCustomerData } from "../api/users";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUserById, getCustomerData, deleteUser } from "../api/users";
 import EditUsersPopup from "./EditUsersPopup";
 
 export default function UserContentPage() {
@@ -10,6 +10,7 @@ export default function UserContentPage() {
     const [user, setUser] = useState<any>();
     const [client, setClient] = useState<any>();
     const [seen, setSeen] = useState(false);
+    const navigate = useNavigate();
 
     const fetchUser = async () => {
         try {
@@ -33,6 +34,18 @@ export default function UserContentPage() {
             alert(error);
         }
     };    
+
+    const handleDeleteUser = async () => {
+        try {
+            if (window.confirm("Are you sure you want to delete this user?")) {
+                await deleteUser(token, user.UserID);
+                alert("User deleted successfully");
+                navigate("/users");
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
     
     const toggle = () => {
         if (seen) {
@@ -72,7 +85,8 @@ export default function UserContentPage() {
                         </div>
                     )
                 }   
-                <button onClick={toggle}>Edit</button>                
+                <button onClick={toggle}>Edit</button>    
+                <button onClick={handleDeleteUser}>Delete</button>
             </div>
             {
                 seen && (

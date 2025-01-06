@@ -1,4 +1,4 @@
-import { post, get, put } from "../utils/Requests";
+import { post, get, put, del } from "../utils/Requests";
 
 export const createProduct = async (token: string, body: any) => {
     const headers = { authorization: `Bearer ${token}` };    
@@ -13,4 +13,9 @@ export const getProductById = async (token: string, id: number) => {
 export const updateProduct = async (token: string, id: number, body: any) => {
     const headers = { authorization: `Bearer ${token}` };
     return put(`/products/${id}`, body, headers);
+}
+
+export const deleteProduct = async (token: string, id: number) => {
+    const headers = { authorization: `Bearer ${token}` };
+    return del(`/products/${id}`, headers);
 }

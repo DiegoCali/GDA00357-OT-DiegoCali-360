@@ -426,6 +426,9 @@ AS
     UPDATE ProductCategories
     SET StateID = 6
     WHERE CategoryID = @CategoryID
+    UPDATE Products
+    SET StateID = 6
+    WHERE CategoryID = @CategoryID
 GO
 -- Procedure to Activate a Product
 CREATE PROCEDURE ActivateProduct

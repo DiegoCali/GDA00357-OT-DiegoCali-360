@@ -1,4 +1,4 @@
-import { get, post, put } from "../utils/Requests";
+import { get, post, put, del } from "../utils/Requests";
 
 export const getUsers = async (token: string) => {
     const headers = { authorization: `Bearer ${token}` }
@@ -28,4 +28,9 @@ export const getCustomerData = async (token: string, id: number) => {
 export const updateUser = async (token: string, id: number, body: any) => {
     const headers = { authorization: `Bearer ${token}` }
     return await put(`/users/${id}`, body, headers);
+}
+
+export const deleteUser = async (token: string, id: number) => {
+    const headers = { authorization: `Bearer ${token}` }
+    return await del(`/users/${id}`, headers);
 }

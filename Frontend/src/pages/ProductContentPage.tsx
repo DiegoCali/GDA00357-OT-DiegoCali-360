@@ -1,7 +1,7 @@
 import { useAuth } from "../store/authStore";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductById } from "../api/products";
+import { getProductById, deleteProduct } from "../api/products";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -45,6 +45,18 @@ export default function ProductContentPage() {
         }
     }
 
+    const handleDeleteProduct = async () => {
+        try {
+            if (window.confirm("Are you sure you want to delete this product?")) {
+                await deleteProduct(token, productData.ProductID);
+                alert("Product deleted successfully");
+                navigate("/categories");
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
+
     const toggle = () => {
         if (seen) {
             handleGetProduct();
@@ -79,7 +91,12 @@ export default function ProductContentPage() {
                             role === 1 && (                                
                                 <button onClick={toggle}>Edit Product</button>                                                                    
                             )
-                        }                        
+                        }       
+                        {
+                            role === 1 && (                                
+                                <button onClick={handleDeleteProduct}>Delete Product</button>                                                                    
+                            )
+                        }                 
                         <form onSubmit={handleSubmit(handleAddToCart)}>
                         {
                             role === 2 && (
@@ -94,7 +111,7 @@ export default function ProductContentPage() {
                             role === 2 && (
                                 <button type="submit">Add to Cart</button>
                             )
-                        }                
+                        }                                        
                         </form>
                     </div>
                 </div>         
