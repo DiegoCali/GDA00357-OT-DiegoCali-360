@@ -8,8 +8,9 @@ export class OrderController implements ControllerInterface {
         try {
             console.log('\x1b[33m%s\x1b[0m',`POST /orders`);
             const { user_id, name, delivery, phone, email, products } = req.body;
+            console.log(user_id);
             await sql.query(
-                `EXEC InsertOrder :user_id, :name, :delivery, :phone, :email, products;`,
+                `EXEC InsertOrder :user_id, :name, :delivery, :phone, :email, :products;`,
                 {
                     replacements: {
                         user_id,
@@ -67,8 +68,31 @@ export class OrderController implements ControllerInterface {
     }
 
     selectById = async (req: Request, res: Response) => {
-        console.log('\x1b[32m%s\x1b[0m',`GET /orders/:id`);
+        try {            
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`GET /orders/${id}`);
+            const order = await sql.query("SELECT * FROM OrderDetails WHERE OrderID = :id", {
+                replacements: { id },
+                type: QueryTypes.SELECT,
+            });
+            res.status(200).send(order);
+        } catch (error) {
+            res.status(500).send({ error: "Error selecting order" });
+        }
     }
 
-    // Private and individual methods        
+    // Private and individual methods 
+    selectByUserId = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`GET /orders/user/${id}`);
+            const orders = await sql.query("SELECT * FROM Orders WHERE UserID = :id", {
+                replacements: { id },
+                type: QueryTypes.SELECT,
+            });
+            res.status(200).send(orders);
+        } catch (error) {
+            res.status(500).send({ error: "Error selecting orders" });
+        }
+    }       
 }

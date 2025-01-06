@@ -11,6 +11,7 @@ interface AuthState {
     setRole: (role: number) => void;
     setUserId: (user_id: number) => void;
     setCustomerId: (customer_id: number) => void;
+    clearCart: () => void;
     logout: () => void;
     login: (body: any) => void;    
     addToCart: (product: number, quantity: number) => void;
@@ -27,6 +28,7 @@ export const useAuth = create<AuthState>((set) => ({
     setRole: (role) => set({ role }),
     setUserId: (user_id) => set({ user_id }),    
     setCustomerId: (customer_id) => set({ customer_id }),
+    clearCart: () => set({ cart: [] }),
     logout: () => {
         set({ token: "" });
         set({ role: -1 });

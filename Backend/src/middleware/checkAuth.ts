@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 export const checkAuth = (roles: number[]) => async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.split(" ").pop();        
-        const tokenData = verifyToken(token || "");
+        const tokenData = verifyToken(token || "");        
         const role = tokenData.role;     
         if (roles.includes(role)) {
             next();

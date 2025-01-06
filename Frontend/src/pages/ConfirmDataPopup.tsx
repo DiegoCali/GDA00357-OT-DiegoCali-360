@@ -16,7 +16,7 @@ export default function ConfirmDataPopup(props: any) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
-    const { token, customer_id, user_id, cart } = useAuth();
+    const { token, customer_id, user_id, cart, clearCart } = useAuth();
     const [customerData, setCustomerData] = useState<any>({});
 
     const fetchData = async () => {
@@ -35,6 +35,7 @@ export default function ConfirmDataPopup(props: any) {
             data.products = cart;
             await createOrder(token, data);
             alert("Order created successfully.");
+            clearCart();
             props.toggle();            
         } catch (error) {
             alert(error);

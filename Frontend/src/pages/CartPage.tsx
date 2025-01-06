@@ -46,7 +46,7 @@ export default function CartPage() {
                 alert("Cart is empty.");
                 return;
             }
-            togglePop();
+            togglePop();            
         } catch (error) {
             console.error("Failed to checkout:", error);
         }

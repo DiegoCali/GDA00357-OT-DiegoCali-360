@@ -195,7 +195,7 @@ BEGIN
 
         -- Insert into Orders table
         INSERT INTO Orders (StateID, creation_date, order_name, delivery_address, phone, email, delivery_date, total_price)
-        VALUES (2, GETDATE(), @order_name, @delivery, @phone, @email, NULL, 0);
+        VALUES (@user_id, 2, GETDATE(), @order_name, @delivery, @phone, @email, NULL, 0);
 
         -- Get the newly created OrderID
         SET @order_id = SCOPE_IDENTITY();
