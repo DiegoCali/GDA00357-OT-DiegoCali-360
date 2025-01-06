@@ -28,5 +28,24 @@ export class AuthController {
         } catch (error) {
             res.status(500).send({ error: "Error logging in" });
         }
-    }    
+    }  
+
+    checkState = async (req: Request, res: Response) => {
+        try {
+            console.log('\x1b[36m%s\x1b[0m',`GET /checkState`);
+            const { state_id } = req.params;
+            const state : any = await sql.query(
+                `Select * from States where StateID = :state_id;`,
+                {
+                  replacements: {
+                    state_id                    
+                  },
+                  type: QueryTypes.SELECT,
+                }
+            );
+            res.status(200).send({ state: state[0] });
+        } catch (error) {
+            res.status(500).send({ error: "Error checking user" });
+        }
+    } 
 }

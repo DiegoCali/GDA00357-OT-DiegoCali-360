@@ -521,3 +521,73 @@
 .popup-inner button:hover {
   background-color: #242424; /* Darker blue on hover */
 }
+/* History */
+/* Order Card */
+.order-card {
+  background-color: #f9f9f9; /* Light gray background */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 15px 20px; /* Inner spacing */
+  margin-bottom: 15px; /* Space between cards */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: Arial, sans-serif;
+  color: #333; /* Text color */
+}
+
+/* Header Information */
+.order-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222; /* Darker text for emphasis */
+  font-weight: bold;
+}
+
+.order-card p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #666; /* Subtle text for less emphasis */
+}
+
+/* State Styling */
+.order-card p:nth-of-type(2) {
+  color: #007bff; /* Blue for state information */
+  font-weight: bold;
+}
+
+/* Button */
+.order-card button {
+  margin-top: 10px;
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+}
+
+.order-card button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Order Details */
+.order-card .details-container {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff; /* White background for details */
+  border: 1px solid #ddd; /* Border for separation */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for details */
+}
+
+.order-card .details-container p {
+  margin: 0 0 5px; /* Spacing between detail items */
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.order-card .details-container p:last-child {
+  margin-bottom: 0; /* Remove margin from last item */
+}

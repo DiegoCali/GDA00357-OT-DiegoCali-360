@@ -25,7 +25,14 @@ export default function HistoryPage() {
     return (
         <div>
             {orders.map((order: any) => (
-                <Order key={order.OrderID} id={order.OrderID} name={order.order_name} total={order.total_price} state={order.StateID} />
+                <Order
+                key={order.OrderID}
+                id={order.OrderID}
+                name={order.order_name}
+                total={order.total_price}
+                state={order.StateID}
+                created_at={order.creation_date}
+                />
             ))}
         </div>
     )

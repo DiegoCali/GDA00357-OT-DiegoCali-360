@@ -1,16 +1,21 @@
 import { useAuth } from "../store/authStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getOrderDetails } from "../api/orders";
+import { checkState } from "../api/auth";
+import Detail from "./Detail";
 
 interface OrderProps {
     id: number;
     name: string;
     total: number;
     state: number;
+    created_at: string;
 }
 
-const Order: React.FC<OrderProps> = ({ id, name, total, state }) => {    
+const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => {    
     const [orderDetails, setOrderDetails] = useState<any>()
+    const [seen, setSeen] = useState(false);
+    const [stateName, setStateName] = useState<any>();
     const { token } = useAuth()    
 
     const handleGetDetails = async () => {
@@ -22,15 +27,48 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state }) => {
         }
     }
 
+    const handleCheckState = async () => {
+        try {
+            const response = await checkState(state)
+            console.log(response)
+            setStateName(response.state)
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleCancelOrder = async () => {
+        try {
+            // Cancel order logic here
+            alert("Order cancelled.")
+        } catch (error) {
+            console.error("Failed to cancel order:", error)
+        }
+    }
+    
+    const toggle = () => {
+        if (seen) {
+            handleGetDetails()
+        }
+        setSeen(!seen)
+    }
+
+    useEffect(() => {
+        handleGetDetails();
+        handleCheckState();
+    }, [])
+
     return (
-        <div>
+        <div className="order-card">
             <h3>{name}</h3>
-            <p>{total}</p>
-            <p>{state}</p>
-            <button onClick={handleGetDetails}>Details</button>
-            <div>
-                {orderDetails && orderDetails.map((detail: any) => (
-                    <p key={detail.ProductID}>{detail.price} - {detail.quantity}</p>
+            <p>Total: {total}</p>
+            <p>State: {stateName?.state_name}</p>    
+            <p>{created_at}</p>       
+            <button onClick={handleCancelOrder}>Cancel order</button>
+            <button onClick={toggle}>{seen ? "Hide" : "Show"} details</button>
+            <div className="details-container">
+                {seen && orderDetails && orderDetails.map((detail: any) => (
+                    <Detail key={detail.ProductID} product_id={detail.ProductID} quantity={detail.quantity} />
                 ))}
             </div>            
         </div>
