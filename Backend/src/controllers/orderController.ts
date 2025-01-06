@@ -54,7 +54,22 @@ export class OrderController implements ControllerInterface {
     }
 
     delete = async (req: Request, res: Response) => {
-        console.log('\x1b[31m%s\x1b[0m',`DELETE /orders`);
+        try {
+            const { id } = req.params;
+            console.log('\x1b[31m%s\x1b[0m',`DELETE /orders/${id}`);
+            await sql.query(
+                `EXEC CancelOrder :id;`,
+                {
+                    replacements: {
+                        id
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
+            res.status(200).send({ message: "Order deleted successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error deleting order" });
+        }
     }
 
     select = async (req: Request, res: Response) => {
@@ -63,7 +78,7 @@ export class OrderController implements ControllerInterface {
             const orders = await sql.query("SELECT * FROM Orders");
             res.status(200).send(orders[0]);
         } catch (error) {
-            res.status(500).send({ error: "Error selecting orders" });
+            res.status(500).send({ error: `${error}` });
         }
     }
 
@@ -94,5 +109,33 @@ export class OrderController implements ControllerInterface {
         } catch (error) {
             res.status(500).send({ error: "Error selecting orders" });
         }
-    }       
+    }   
+    
+    confirmOrder = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`PUT /orders/${id}/confirm`);
+            await sql.query("EXEC ConfirmOrder :id;", {
+                replacements: { id },
+                type: QueryTypes.RAW,
+            });
+            res.status(200).send({ message: "Order confirmed successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error confirming order" });
+        }
+    }
+    
+    deliverOrder = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            console.log('\x1b[32m%s\x1b[0m',`PUT /orders/${id}/deliver`);
+            await sql.query("EXEC DeliverOrder :id;", {
+                replacements: { id },
+                type: QueryTypes.RAW,
+            });
+            res.status(200).send({ message: "Order delivered successfully" });
+        } catch (error) {
+            res.status(500).send({ error: "Error delivering order" });
+        }
+    }
 }

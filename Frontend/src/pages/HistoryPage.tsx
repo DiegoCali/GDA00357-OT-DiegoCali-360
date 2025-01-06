@@ -1,6 +1,6 @@
 import { useAuth } from "../store/authStore";
 import { useEffect, useState } from "react";
-import { getOrders } from "../api/orders";
+import { getUserOrders } from "../api/orders";
 import Order from "../components/Order";
 
 
@@ -10,7 +10,7 @@ export default function HistoryPage() {
 
     const fetchOrders = async () => {
         try {
-            const response = await getOrders(token, user_id);
+            const response = await getUserOrders(token, user_id);
             setOrders(response);
             console.log(response);
         } catch (error) {

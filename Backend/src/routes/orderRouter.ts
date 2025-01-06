@@ -12,5 +12,7 @@ orderRouter.get("/orders/:id/user", checkAuth([UserTypes.OPERATOR, UserTypes.CUS
 orderRouter.post("/orders", checkAuth([UserTypes.OPERATOR, UserTypes.CUSTOMER]), orderController.insert);
 orderRouter.put("/orders/:id", checkAuth([UserTypes.OPERATOR]), orderController.update);
 orderRouter.delete("/orders/:id", checkAuth([UserTypes.OPERATOR]), orderController.delete);
+orderRouter.put("/orders/:id/confirm", checkAuth([UserTypes.OPERATOR]), orderController.confirmOrder);
+orderRouter.put("/orders/:id/deliver", checkAuth([UserTypes.OPERATOR]), orderController.deliverOrder);
 
 export { orderRouter };

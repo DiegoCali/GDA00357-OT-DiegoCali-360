@@ -2,6 +2,8 @@ import { useAuth } from "../store/authStore";
 import { useState, useEffect } from "react";
 import { getOrderDetails } from "../api/orders";
 import { checkState } from "../api/auth";
+import { confirmOrder, deliverOrder, cancelOrder } from "../api/orders";
+import { useNavigate } from "react-router-dom";
 import Detail from "./Detail";
 
 interface OrderProps {
@@ -16,7 +18,8 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => 
     const [orderDetails, setOrderDetails] = useState<any>()
     const [seen, setSeen] = useState(false);
     const [stateName, setStateName] = useState<any>();
-    const { token } = useAuth()    
+    const { token, role } = useAuth();
+    const navigate = useNavigate();     
 
     const handleGetDetails = async () => {
         try {
@@ -39,10 +42,33 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => 
 
     const handleCancelOrder = async () => {
         try {
-            // Cancel order logic here
-            alert("Order cancelled.")
+            if (window.confirm("Are you sure you want to cancel this order?")) {
+                await cancelOrder(token, id)
+                alert("Order canceled.")
+                navigate("/", { replace: true })
+            }                        
         } catch (error) {
             console.error("Failed to cancel order:", error)
+        }
+    }
+
+    const handleConfirmOrder = async () => {
+        try {
+            await confirmOrder(token, id)
+            alert("Order confirmed.")
+            navigate("/", { replace: true })
+        } catch (error) {
+            console.error("Failed to confirm order:", error)
+        }
+    }
+
+    const handleDeliverOrder = async () => {
+        try {
+            await deliverOrder(token, id)
+            alert("Order delivered.")
+            navigate("/", { replace: true })
+        } catch (error) {
+            console.error("Failed to deliver order:", error)
         }
     }
     
@@ -63,8 +89,22 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => 
             <h3>{name}</h3>
             <p>Total: {total}</p>
             <p>State: {stateName?.state_name}</p>    
-            <p>{created_at}</p>       
-            <button onClick={handleCancelOrder}>Cancel order</button>
+            <p>{created_at}</p>    
+            {
+                role === 1 && state === 2 && (
+                    <button onClick={handleConfirmOrder}>Confirm order</button>
+                )
+            }   
+            {
+                role === 1 && state === 1 && (
+                    <button onClick={handleDeliverOrder}>Deliver order</button>
+                )
+            }
+            {
+                state !== 4 && state !== 3 && (
+                    <button onClick={handleCancelOrder}>{role === 1 ? "Discard" : "Cancel" } order</button>
+                )
+            }            
             <button onClick={toggle}>{seen ? "Hide" : "Show"} details</button>
             <div className="details-container">
                 {seen && orderDetails && orderDetails.map((detail: any) => (

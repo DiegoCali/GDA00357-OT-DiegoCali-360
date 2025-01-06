@@ -39,12 +39,14 @@ export default function MainPage() {
                         <div>
                             <h2>Orders</h2>
                             {ordersData.map((order: any) => (
-                                <Order 
-                                    id={order.OrderId}
-                                    name={order.order_name}
-                                    total={order.total_price}
-                                    state={order.StateID}
-                                 />
+                                <Order
+                                key={order.OrderID}
+                                id={order.OrderID}
+                                name={order.order_name}
+                                total={order.total_price}
+                                state={order.StateID}
+                                created_at={order.creation_date}
+                                />
                             ))}
                         </div>
                     ) : (                                                
