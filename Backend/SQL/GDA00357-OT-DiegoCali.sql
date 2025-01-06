@@ -419,6 +419,14 @@ AS
     SET StateID = 6
     WHERE ProductID = @ProductID
 GO
+-- Procedure to Inactivate a Product Category
+CREATE PROCEDURE InactivateCategory
+    @CategoryID INT
+AS
+    UPDATE ProductCategories
+    SET StateID = 6
+    WHERE CategoryID = @CategoryID
+GO
 -- Procedure to Activate a Product
 CREATE PROCEDURE ActivateProduct
     @ProductID INT

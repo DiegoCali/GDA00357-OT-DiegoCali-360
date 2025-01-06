@@ -29,10 +29,10 @@ export default function CategoryPage() {
                     <div>
                         <h2>Categories</h2>
                         <div className="CategoryContainer">
-                        {categoriesData.map((category: any) => (
+                        {categoriesData.map((category: any) => (                            
                             <Category 
                                 id={category.CategoryID}
-                                name={category.category_name}                                    
+                                name={category.category_name}                                                       
                                 />
                         ))}
                         </div>

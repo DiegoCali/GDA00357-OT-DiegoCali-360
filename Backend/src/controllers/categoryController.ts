@@ -45,10 +45,10 @@ export class CategoryController implements ControllerInterface {
         }
     }
 
-    delete = async (req: Request, res: Response) => {
-        console.log('\x1b[31m%s\x1b[0m',`DELETE /categories`);
+    delete = async (req: Request, res: Response) => {        
         try {
             const { id } = req.params;
+            console.log('\x1b[31m%s\x1b[0m',`DELETE /categories/${id}`);
             await sql.query(
                 `EXEC InactivateCategory :id;`,
                 {
@@ -60,14 +60,16 @@ export class CategoryController implements ControllerInterface {
             );
             res.status(200).send({ message: "Category deleted successfully" });
         } catch (error) {
-            res.status(500).send({ error: "Error deleting category" });
+            res.status(500).send({ error: `${error}` });
         }
     }
 
     select = async (req: Request, res: Response) => {
         try {
             console.log('\x1b[32m%s\x1b[0m',`GET /categories`);
-            const categories = await sql.query("SELECT * FROM ProductCategories");
+            const categories = await sql.query(
+                "SELECT * FROM ProductCategories WHERE StateID = 5"
+            );
             res.status(200).send(categories[0]);
         } catch (error) {
             res.status(500).send({ error: "Error selecting categories" });
