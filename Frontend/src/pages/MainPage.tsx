@@ -46,6 +46,7 @@ export default function MainPage() {
                                 total={order.total_price}
                                 state={order.StateID}
                                 created_at={order.creation_date}
+                                delivered_at={order.delivery_date}
                                 />
                             ))}
                         </div>

@@ -492,10 +492,12 @@ AS
 GO
 -- Procedure to Deliver an Order
 CREATE PROCEDURE DeliverOrder
-    @OrderID INT
+    @OrderID INT,
+    @date DATETIME
 AS
     UPDATE Orders
-    SET StateID = 4
+    SET StateID = 4,
+    delivery_date = @date
     WHERE OrderID = @OrderID
 GO
 -- Procedure to Set the total price of an Order

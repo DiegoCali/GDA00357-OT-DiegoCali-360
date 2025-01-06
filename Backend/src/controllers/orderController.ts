@@ -129,10 +129,18 @@ export class OrderController implements ControllerInterface {
         try {
             const { id } = req.params;
             console.log('\x1b[32m%s\x1b[0m',`PUT /orders/${id}/deliver`);
-            await sql.query("EXEC DeliverOrder :id;", {
-                replacements: { id },
-                type: QueryTypes.RAW,
-            });
+            const { delivery_date } = req.body;
+            const clean_date = new Date(delivery_date).toISOString().split('T')[0];
+            await sql.query(
+                `EXEC DeliverOrder :id, :delivery_date;`,
+                {
+                    replacements: {
+                        id,
+                        delivery_date: clean_date
+                    },
+                    type: QueryTypes.RAW,
+                }
+            );
             res.status(200).send({ message: "Order delivered successfully" });
         } catch (error) {
             res.status(500).send({ error: "Error delivering order" });

@@ -83,7 +83,7 @@ export default function ProductContentPage() {
                             <p>State: {productData.StateID}</p>
                             {
                                 role === 1 && (
-                                    <p>Created: {productData.creation_date}</p>
+                                    <p>Created: {productData.creation_date.split("T")[0]}</p>
                                 )
                             }                        
                         </div>

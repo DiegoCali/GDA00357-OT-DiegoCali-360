@@ -26,9 +26,9 @@ export const confirmOrder = async (token: string, id: number) => {
     return await put(`/orders/${id}/confirm`, {}, header);
 }
 
-export const deliverOrder = async (token: string, id: number) => {
+export const deliverOrder = async (token: string, id: number, body: any) => {
     const header = { authorization: `Bearer ${token}` };
-    return await put(`/orders/${id}/deliver`, {}, header);
+    return await put(`/orders/${id}/deliver`, body, header);
 }
 
 export const cancelOrder = async (token: string, id: number) => {

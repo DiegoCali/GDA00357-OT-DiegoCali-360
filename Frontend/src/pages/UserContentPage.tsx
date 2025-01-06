@@ -72,7 +72,7 @@ export default function UserContentPage() {
                 <p><span>Username:</span> {user?.user_name}</p>
                 <p><span>Phone:</span> {user?.phone}</p>
                 <p><span>Birthdate:</span> {user?.birth_date}</p>
-                <p><span>Creation Date:</span> {user?.creation_date}</p>                   
+                <p><span>Creation Date:</span> {user?.creation_date.split("T")[0]}</p>                   
                 {
                     client && (
                         <div className="client-info">

@@ -12,9 +12,10 @@ interface OrderProps {
     total: number;
     state: number;
     created_at: string;
+    delivered_at?: string;
 }
 
-const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => {    
+const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at, delivered_at }) => {    
     const [orderDetails, setOrderDetails] = useState<any>()
     const [seen, setSeen] = useState(false);
     const [stateName, setStateName] = useState<any>();
@@ -64,7 +65,10 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => 
 
     const handleDeliverOrder = async () => {
         try {
-            await deliverOrder(token, id)
+            const body = {
+                delivery_date: new Date().toISOString()
+            }
+            await deliverOrder(token, id, body)
             alert("Order delivered.")
             navigate("/", { replace: true })
         } catch (error) {
@@ -89,7 +93,8 @@ const Order: React.FC<OrderProps> = ({ id, name, total, state, created_at }) => 
             <h3>{name}</h3>
             <p>Total: {total}</p>
             <p>State: {stateName?.state_name}</p>    
-            <p>{created_at}</p>    
+            <p>Created: {created_at.split("T")[0]}</p>   
+            {delivered_at && <p>Delivered: {delivered_at}</p>} 
             {
                 role === 1 && state === 2 && (
                     <button onClick={handleConfirmOrder}>Confirm order</button>
