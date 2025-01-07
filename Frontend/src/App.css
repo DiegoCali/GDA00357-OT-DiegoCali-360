@@ -591,3 +591,90 @@
 .order-card .details-container p:last-child {
   margin-bottom: 0; /* Remove margin from last item */
 }
+/* TOPS */
+/* Container */
+.top-container {
+  background-color: #f9f9f9; /* Light background */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-width: 600px; /* Limit width for readability */
+  margin: 20px auto; /* Center container on the page */
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Title */
+.top-container h1 {
+  font-size: 1.8rem;
+  color: #007bff; /* Blue for emphasis */
+  margin-bottom: 15px; /* Space between title and list */
+  text-align: center; /* Center-align the title */
+}
+
+/* List */
+.top-container ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.top-container li {
+  background-color: #fff; /* White background for items */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px 15px;
+  margin-bottom: 10px; /* Space between items */
+  font-size: 1rem;
+  display: flex; /* Align text horizontally */
+  justify-content: space-between; /* Space between name and value */
+  align-items: center; /* Vertically align content */
+  color: #333; /* Neutral text color */
+  transition: background-color 0.3s ease;
+}
+
+.top-container li:hover {
+  background-color: #f1f1f1; /* Slightly darker background on hover */
+}
+
+/* Text Styling */
+.top-container li span:first-child {
+  font-weight: bold; /* Emphasize product or client name */
+}
+
+.top-container li span:last-child {
+  color: #666; /* Muted color for the value */
+}
+/* Dashboard */
+/* Dashboard Container */
+.dashboard {
+  display: flex; /* Create a horizontal layout */
+  align-items: flex-start; /* Align items to the top */
+  gap: 20px; /* Add space between Actives and Tops */
+  padding: 20px;
+}
+
+/* Actives Section */
+.dashboard .actives-container {
+  flex: 1; /* Allow Actives to take up 1 part of the available space */
+  background-color: #f9f9f9; /* Light background for Actives */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+}
+
+/* Tops Section */
+.dashboard .tops-container {
+  flex: 2; /* Allow Tops to take up 2 parts of the available space */
+  display: flex; /* Flex layout for vertical stacking */
+  flex-direction: column; /* Stack Tops vertically */
+  gap: 20px; /* Space between Top products and clients */
+}
+
+/* Individual Top Cards */
+.dashboard .tops-container > div {
+  background-color: #f9f9f9; /* Light background for Tops */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+}

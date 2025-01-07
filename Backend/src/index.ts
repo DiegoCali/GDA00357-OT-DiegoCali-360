@@ -6,6 +6,7 @@ import { authRouter } from './routes/authRouter';
 import { categoryRouter } from './routes/categoryRouter';
 import { productRouter } from './routes/productRouter';
 import { orderRouter } from './routes/orderRouter';
+import { dashboardRouter } from './routes/dashboardRouter';
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ app.use(authRouter);
 app.use(categoryRouter);
 app.use(productRouter);
 app.use(orderRouter);
+app.use(dashboardRouter);
 
 app.listen(port, () => {
   console.log('\x1b[36m%s\x1b[0m',`App listening at http://localhost:${port}`);

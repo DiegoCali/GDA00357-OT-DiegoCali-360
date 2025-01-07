@@ -12,6 +12,7 @@ import ProductContentPage from './pages/ProductContentPage'
 import ProductFormPage from './pages/ProductFormPage'
 import CartPage from './pages/CartPage'
 import HistoryPage from './pages/HistoryPage'
+import DashboardPage from './pages/DashboardPage'
 
 import NavBar from './components/NavBar'
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/new-user/:kind" element={<UsersFormPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/history" element={<HistoryPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </BrowserRouter>
     </div>

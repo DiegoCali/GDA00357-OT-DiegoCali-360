@@ -8,7 +8,7 @@ import { genToken } from "../utils/webToken";
 export class AuthController {
     login = async (req: Request, res: Response) => {
         try {
-            console.log('\x1b[32m%s\x1b[0m',`POST /login`);
+            console.log('\x1b[33m%s\x1b[0m',`POST /login`);
             const { email, password } = req.body;
             const user : any = await sql.query(
                 `EXEC LoginEmail :email;`,
@@ -32,7 +32,7 @@ export class AuthController {
 
     checkState = async (req: Request, res: Response) => {
         try {
-            console.log('\x1b[36m%s\x1b[0m',`GET /checkState`);
+            console.log('\x1b[32m%s\x1b[0m',`GET /checkState`);
             const { state_id } = req.params;
             const state : any = await sql.query(
                 `Select * from States where StateID = :state_id;`,

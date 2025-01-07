@@ -41,6 +41,15 @@ export default function NavBar() {
                     )
                 }
                 {
+                    location.pathname !== "/dashboard" && (
+                        role === 1 && (
+                            <li>
+                                <NavLink to="/dashboard">Dashboard</NavLink>
+                            </li>
+                        )
+                    )
+                }
+                {
                     location.pathname !== "/cart" && (
                         role === 2 && (
                             <li>

@@ -542,7 +542,7 @@ CREATE VIEW [ActiveProducts]
 AS
     SELECT *
     FROM Products
-    WHERE StateID = 1 AND stock > 0
+    WHERE StateID = 5 AND stock > 0
 GO
 -- View to get total of orders in August 2024
 CREATE VIEW [TotalOrdersAugust2024]
