@@ -70,20 +70,20 @@ export default function ProductContentPage() {
 
     return (
         <div className="product-profile">
-            <h1>{productData.product_name}</h1>            
+            <h1>{productData?.product_name}</h1>            
                 <div className="product-details">
                     <h2>Details</h2>
                     <div className="product-info">
-                        <img src={productData.picture} alt={productData.product_name} />
+                        <img src={productData?.picture} alt={productData?.product_name} />
                         <div>
-                            <p>Price: {productData.price}</p>
-                            <p>Stock: {productData.stock}</p>
-                            <p>Brand: {productData.brand}</p>
-                            <p>Code: {productData.code}</p>                    
-                            <p>State: {productData.StateID}</p>
+                            <p>Price: {productData?.price}</p>
+                            <p>Stock: {productData?.stock}</p>
+                            <p>Brand: {productData?.brand}</p>
+                            <p>Code: {productData?.code}</p>                    
+                            <p>State: {productData?.StateID}</p>
                             {
                                 role === 1 && (
-                                    <p>Created: {productData.creation_date?.split("T")[0]}</p>
+                                    <p>Created: {productData?.creation_date?.split("T")[0]}</p>
                                 )
                             }                        
                         </div>
@@ -115,7 +115,7 @@ export default function ProductContentPage() {
                         </form>
                     </div>
                 </div>         
-                {seen && <EditProductPopup id={productData.ProductID} toggle={toggle} />}   
+                {seen && <EditProductPopup id={productData?.ProductID} toggle={toggle} />}   
         </div>
     );
 }
